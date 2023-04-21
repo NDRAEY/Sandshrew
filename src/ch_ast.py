@@ -11,6 +11,9 @@ class Integer:
     lineno: int
     position: int
 
+    def __add__(a, b):
+        return Integer(a.value + b.value, a.lineno, a.position)
+
 @dataclass
 class Abs:
     value: Any

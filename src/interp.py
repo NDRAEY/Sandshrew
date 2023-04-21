@@ -7,6 +7,7 @@ from copy import deepcopy
 from typing import Any
 
 from derivate import derivate
+from limits import limit
 
 class Interpreter:
     def __init__(self, code: str,
@@ -48,6 +49,19 @@ class Interpreter:
             return result
         elif type(binop) is AST.Derivate:
             self.__error(binop, "Невозможно использовать производную рядом с выражением.")
+        elif type(binop) is AST.Limit:
+            partial_fun = lambda x: self.__particular_eval(self.__func_call_by_function(
+                AST.Func(
+                    AST.Name("_", -1, -1),
+                    AST.Params([AST.Name('x', -1, -1)], -1),
+                    binop.equation,
+                    -1
+                ),
+                [AST.Integer(x, -1, -1)],
+                binop.equation
+            ))
+
+            return limit(partial_fun, binop.to.value.value)
 
         op = binop.op
         left = binop.left
@@ -59,9 +73,12 @@ class Interpreter:
         tle = type(eleft).__name__
         tre = type(eright).__name__
 
-        if tle != tre:
+        n1 = tle in ("int", "float")
+        n2 = tre in ("int", "float")
+
+        if tle != tre and (not n1) and (not n2):
             self.__error(left, f"Несовместимые типы для операции `{op}`: {tle} и {tre}")
-        
+         
         if op == "+":
             return eleft + eright
         elif op == "-":
@@ -89,25 +106,9 @@ class Interpreter:
         elif type(elem) is AST.String:
             return elem.string
         elif type(elem) is AST.Derivate:
-            func = elem.value
-
-            partial_fun = lambda x: self.__func_call_by_function(
-                AST.Func(
-                    AST.Name("_", -1, -1),
-                    AST.Params([AST.Name('x', -1, -1)], -1),
-                    func,
-                    -1
-                ),
-                [AST.Integer(x, -1, -1)],
-                func
-            )
-
-            d = derivate(
-                partial_fun,
-                1
-            )
-
-            return d
+            return self.func2deriv(elem.value)
+        elif type(elem) is AST.Limit:
+            return self.__binop_eval(elem)
 
         else:
             print("WARNING: Unevaluable type:", type(elem))

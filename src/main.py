@@ -14,9 +14,9 @@ def make_ast(code):
 
 if __name__=="__main__":
     code = '''
-    a(x) = 3x
+    a = lim<x->2>(x)
     
-    print(a(2))
+    print(a)
     '''
 
     tot = make_ast(code)
