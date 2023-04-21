@@ -5,27 +5,21 @@ from interp import Interpreter
 from ch_modules import print as PrintModule
 from ch_modules import trigonometry as TrigModule
 
-if __name__=="__main__":
-    code = '''
-    a(x) = -x + 1
-    
-    print(a(2))
-    '''
-
+def make_ast(code):
     lexer = lexparse.lex(module=lexparse)
     lexer.filename = "<stdio>"
     parser = lexparse.yacc(debug=True, module=lexparse)
 
-    """
-    lexer.input(code)
-    while True:
-        t = lexer.token()
-        if not t: break
-        print(t)
-    exit(1)
-    """
+    return parser.parse(code)
 
-    tot = parser.parse(code)
+if __name__=="__main__":
+    code = '''
+    a(x) = 3x
+    
+    print(a(2))
+    '''
+
+    tot = make_ast(code)
 
     pprint(tot)
 

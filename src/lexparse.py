@@ -336,15 +336,6 @@ def p_float(p):
     '''
     p[0] = AST.Float(float(str(p[1])+"."+str(p[3])), p.lineno(1), p.lexpos(1))
 
-"""
-def p_oend(p):
-    '''
-    o_end : end
-          | empty
-    '''
-    p[0] = p[1]
-"""
-
 def p_end(p):
     '''
     end : SEMICOLON
@@ -352,8 +343,3 @@ def p_end(p):
     '''
     p[0] = AST.End(p[1], p.lineno(1))
 
-"""
-def p_empty(p):
-    '''empty : '''
-    p[0] = None
-"""
