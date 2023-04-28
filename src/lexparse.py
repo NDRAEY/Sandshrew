@@ -65,24 +65,11 @@ tokens = ["STRING",
           "BRACKET_OPEN", "BRACKET_CLOSE",
           "CURLY_OPEN", "CURLY_CLOSE",
           "QUOTE", "ARROW_RIGHT", "FACTOR",
-          "EXPON", "OR"
+          "EXPON", "OR", "UNINTEGER"
           ] + list(reserved)
 
 def t_INTEGER(token):
     r"(0x[\dA-Fa-f]+|0o[0-7]+|0b[10]+|\d+)"
-
-    if len(token.value) == 1:
-        token.value = int(token.value)
-    else:
-        token.value = int(token.value, base=(
-            16 if token.value[1]=="x" else (
-                8 if token.value[1]=="o" else (
-                    2 if token.value[1]=="b" else (
-                        10
-                    )
-                )
-            )
-        ))
     return token
 
 def t_NEWLINE(token):
@@ -96,7 +83,6 @@ def t_comment_multi(t):
 
 def t_comment(t):
     r'\/\/\/?.*'
-    # t.lexer.lineno += 1
 
 def t_error(t):
     le = LexerError(t.lexer)
@@ -121,13 +107,16 @@ precedence = (
     ('left', 'EQUAL', 'NOT_EQUAL'),
     ('left', 'GREATER', 'LESS'),
     ('left', 'GREATER_EQ', 'LESS_EQ'),
-    ('left', 'PLUS', 'MINUS'),
-    ('left', 'MUL', 'DIV', 'EXPON'),
+    ('left', 'PLUS'),
+    ('left', 'MINUS'),
+    ('left', 'MUL'),
+    ('left', 'DIV'),
+    ('left', 'EXPON'),
     ('right', 'UMINUS'),
 )
 
 def p_error(p):
-    errtoken = "`"+p.value+"`" if p else "`unknown`"
+    errtoken = "`"+str(p.value)+"`" if p else "`unknown`"
     tokentype = p.type if p else "`null`"
     ln = p.lineno if p else 0
     print(f'Синтаксическая ошибка => {errtoken} (ID токена: {tokentype}) (Строка: {ln})')
@@ -328,7 +317,7 @@ def p_number(p):
     '''
     number : INTEGER
     '''
-    p[0] = AST.Integer(p[1], p.lineno(1), p.lexpos(1))
+    p[0] = AST.Integer(eval(p[1]), p.lineno(1), p.lexpos(1))
 
 def p_float(p):
     '''

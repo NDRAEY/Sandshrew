@@ -14,9 +14,9 @@ def make_ast(code):
 
 if __name__=="__main__":
     code = '''
-    a = lim<x->2>(x)
-    
-    print(a)
+    a(x) = ((x - ((x^3) / 3!)) + ((x^5) / 5!)) - ((x^7) / 7!)
+
+    print(a(1.04))
     '''
 
     tot = make_ast(code)

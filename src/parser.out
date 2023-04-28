@@ -13,6 +13,7 @@ Unused terminals:
     LESS
     LESS_EQ
     NOT_EQUAL
+    UNINTEGER
 
 Grammar
 
@@ -99,6 +100,7 @@ QUOTE                : 13
 SEMICOLON            : 43
 STRING               : 33
 TRUE                 : 37
+UNINTEGER            : 
 error                : 
 
 Nonterminals, with rules where they appear
