@@ -11,16 +11,22 @@ from limits import limit
 
 class Interpreter:
     def __init__(self, code: str,
-                       context: Context = Context()):
+                       context: Context = None):
 
-        self.context = context
+        if context:
+            self.context = context
+        else:
+            self.context = Context(code)
+        
         self.codelines = code.split('\n')
 
     def __getcodeline(self, ln: int) -> str:
         return self.codelines[ln - 1] if ln > 0 and ln - 1 < len(self.codelines) else "*неверный номер строки*"
 
-    def __error(self, op, msg: str) -> None:
+    def __error(self, op, msg: str, hint: str = None) -> None:
         log.error(msg)
+        if hint:
+            log.hint(" " + hint)
         print("-" * 5, ": ", f"На строке {op.lineno}", sep='')
         log.codeline(self.__getcodeline(op.lineno), op.lineno, 5)
         exit(1)
@@ -62,6 +68,8 @@ class Interpreter:
             ))
 
             return limit(partial_fun, binop.to.value.value)
+        elif type(binop) is AST.Return:
+            return self.__binop_eval(binop.value)
 
         op = binop.op
         left = binop.left
@@ -109,16 +117,31 @@ class Interpreter:
             return self.func2deriv(elem.value)
         elif type(elem) is AST.Limit:
             return self.__binop_eval(elem)
+        elif type(elem) is AST.FuncCall:
+            return self.__start_func_call(elem.name, elem.arguments)
 
         else:
             print("WARNING: Unevaluable type:", type(elem))
             return elem
 
     def __get_variable_value(self, op, name: str):
+        hint = None
+    
         if name not in self.context.variables:
-            self.__error(op, f"Переменная `{name}` не найдена!!!")
+            if name in self.context.functions:
+                hint = "Найдена функция с таким же именем, возможно вы забыли вызвать её?"
+            self.__error(op, f"Переменная `{name}` не найдена!!!", hint)
 
         return self.context.variables[name]
+
+    def __get_var_or_func(self, op, name):
+        if name in self.context.variables:
+            return self.context.variables[name]
+        elif name in self.context.functions:
+            return self.context.functions[name]
+        else:
+            print("Warning: Neither variable nor the function were found:", name)
+            self.__error(op, f"Ни переменная, ни функция не найдены!", "Имя: "+name)
 
     def __start_func_call(self, name: AST.Name, args: AST.Params):
         realname = name.value
@@ -130,8 +153,11 @@ class Interpreter:
 
         for i in args.value:
             if type(i) is AST.Name:
-                value = self.__get_variable_value(i, i.value)
-                value = self.__particular_eval(value)
+                if i.value in self.context.variables:
+                    value = self.__get_variable_value(i, i.value)
+                    value = self.__particular_eval(value)
+                else:
+                    value = self.__get_var_or_func(i, i.value)
 
                 compiled_args.append(value)
             elif (type(i) is AST.Integer) \
@@ -160,9 +186,9 @@ class Interpreter:
         return self.__func_call_by_function(fn, compiled_args, name)
         # pprint(compiled_args)
 
+
     def __func_call_by_function(self, fn: AST.Func, args: list, fcall: AST.FuncCall = None):
         if type(fn) is not AST.Func:
-            # print("Function", realname, "is built-in")
             return fn(*args)
         else:
             accepts = [self.__particular_eval(i) for i in fn.args.value]
@@ -187,6 +213,9 @@ class Interpreter:
             self.context = oldctx
 
             return res
+
+    def call_func(self, fn, args: list):
+        return self.__func_call_by_function(fn, args)
 
     def add_module(self, module_class):
         module_class(self.context)
@@ -276,6 +305,9 @@ class Interpreter:
                     exit(1)
             elif op_type is AST.FuncCall:
                 self.__start_func_call(op.name, op.arguments)
+            elif op_type is AST.Return:
+                # print(op)
+                return self.__binop_eval(op)
             else:
                 self.__error(op, f"Неизвестная операция класса: {op_type}")
 

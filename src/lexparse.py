@@ -4,6 +4,7 @@ from errors import LexerError
 
 import math
 import ch_ast as AST
+from log import Log as log
 
 # TODO: Make deatiled error when lexing and parsing
 
@@ -40,7 +41,7 @@ t_OR = "\|"
 t_FACTOR = "!"
 
 reserved = (
-    "LIM", "TRUE", "FALSE"
+    "LIM", "TRUE", "FALSE", "RETURN"
 )
 
 reserved_map = {}
@@ -112,35 +113,45 @@ precedence = (
     ('left', 'MUL'),
     ('left', 'DIV'),
     ('left', 'EXPON'),
+    ('left', 'FACTOR'),
     ('right', 'UMINUS'),
 )
 
 def p_error(p):
-    errtoken = "`"+str(p.value)+"`" if p else "`unknown`"
-    tokentype = p.type if p else "`null`"
+    errtoken = "`"+str(p.value)+"`" if p else "`--неизвестно--`"
+    tokentype = p.type if p else "`--неизвестно--`"
     ln = p.lineno if p else 0
-    print(f'Синтаксическая ошибка => {errtoken} (ID токена: {tokentype}) (Строка: {ln})')
+
+    log.error('Синтаксическая ошибка!')
+    log.hint(f' Токен: {errtoken} | ID токена: {tokentype} | Строка: {ln}')
+
+    line = p.lexer.code.split("\n")[ln - 1]
+
+    print("------------")
+    log.codeline(line, ln)
+    print("------------")
     exit(1)
+
+def p_program_first(p):
+    'program : operation'
+    if p[1] and not ((type(p[1]) is AST.Operation) and p[1].op == "\n"):
+        p[0] = AST.Program([p[1]])
+    else:
+        p[0] = AST.Program([])
 
 def p_program(p):
     '''
-    program : operation
-            | program operation
+    program : program operation
     '''
-    if len(p) == 2:
-        if p[1] and not ((type(p[1]) is AST.Operation) and p[1].op == "\n"):
-            p[0] = AST.Program([p[1]])
-        else:
-            p[0] = AST.Program([])
-    else:
-        p[1].ops.append(p[2])
-        p[0] = p[1]
+    p[1].ops.append(p[2])
+    p[0] = p[1]
 
 def p_operation(p):
     '''
     operation : expr end
               | assign end
               | fcall end
+              | return end
               | end
     '''
     p[0] = AST.Operation(p[1], p[1].lineno if hasattr(p[1], 'lineno') else p.lineno(1))
@@ -159,6 +170,10 @@ def p_abs(p):
     abs : OR expr OR
     '''
     p[0] = AST.Abs(p[2], p[2].lineno)
+
+def p_return(p):
+    'return : RETURN expr'
+    p[0] = AST.Return(p[2], p.lineno(1))
 
 def p_factorial(p):
     '''
@@ -204,6 +219,7 @@ def p_function_call(p):
     else:
         p[0] = AST.FuncCall(p[1], AST.Params([], p[1].lineno), p[1].lineno)
 
+
 def p_params(p):
     '''
     params : expr
@@ -217,6 +233,12 @@ def p_params(p):
         else:
             p[0] = AST.Params([p[1], p[3]], p[1].lineno)
 
+
+def p_hard_func(p):
+    'assign : fcall ASSIGN CURLY_OPEN program CURLY_CLOSE'
+    p[0] = AST.Assign(p[1], p[4], p[1].lineno)
+
+
 def p_assign(p):
     '''
     assign : id ASSIGN expr
@@ -227,19 +249,28 @@ def p_assign(p):
 
 def p_binop(p):
     '''
-    expr : value
-         | expr arith expr
+    expr : expr PLUS expr
+         | expr MINUS expr
+         | expr MUL expr
+         | expr DIV expr
+         | expr EXPON expr
     '''
-    if len(p) == 2:
-        p[0] = p[1]
-    else:
-        p[0] = AST.BinOp(p[1], p[2], p[3], p[1].lineno)
+    p[0] = AST.BinOp(p[1], p[2], p[3], p[1].lineno)
 
-        if type(p[1]) == AST.Integer \
-           and type(p[3])==AST.Integer \
-           and p[2] != "/":
-            p[0] = AST.Integer(eval_partial(p[1].value, p[2], p[3].value),
-                               p[1].lineno, p[1].position)
+    if type(p[1]) == AST.Integer \
+       and type(p[3]) == AST.Integer \
+       and p[2] != "/":
+           p[0] = AST.Integer(
+                eval_partial(p[1].value, p[2], p[3].value),
+                p[1].lineno,
+                p[1].position
+            )
+
+
+def p_expval(p):
+    'expr : value'
+    p[0] = p[1]
+
 
 def p_mul_binop(p):
     '''
@@ -247,21 +278,13 @@ def p_mul_binop(p):
     '''
     p[0] = AST.BinOp(p[1], "*", p[2], p[1].lineno)
 
-def p_arith(p):
-    '''
-    arith : PLUS
-          | MINUS
-          | MUL
-          | DIV
-          | EXPON
-    '''
-    p[0] = p[1]
 
 def p_binop_paren(p):
     '''
     expr : PAREN_OPEN expr PAREN_CLOSE
     '''
     p[0] = p[2]
+
 
 def p_negative_value(p):
     '''

@@ -101,6 +101,11 @@ class Negate:
     lineno: int
 
 @dataclass
+class Return:
+    value: Any
+    lineno: int
+
+@dataclass
 class End:
     value: str
     lineno: int
