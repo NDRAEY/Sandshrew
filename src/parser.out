@@ -2,16 +2,9 @@ Created by PLY (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
-    BRACKET_CLOSE
-    BRACKET_OPEN
-    EQUAL
     GREATER
-    GREATER_EQ
     HASH
     LESS
-    LESS_EQ
-    NOT_EQUAL
-    UNINTEGER
 
 Grammar
 
@@ -38,92 +31,86 @@ Rule 19    fcall -> id PAREN_OPEN params PAREN_CLOSE
 Rule 20    fcall -> id PAREN_OPEN PAREN_CLOSE
 Rule 21    params -> expr
 Rule 22    params -> params COMMA expr
-Rule 23    assign -> fcall ASSIGN CURLY_OPEN program CURLY_CLOSE
-Rule 24    assign -> id ASSIGN expr
-Rule 25    assign -> fcall ASSIGN expr
-Rule 26    expr -> expr PLUS expr
-Rule 27    expr -> expr MINUS expr
-Rule 28    expr -> expr MUL expr
-Rule 29    expr -> expr DIV expr
-Rule 30    expr -> expr EXPON expr
-Rule 31    expr -> value
-Rule 32    expr -> expr id
-Rule 33    expr -> PAREN_OPEN expr PAREN_CLOSE
-Rule 34    value -> MINUS value
-Rule 35    value -> STRING
-Rule 36    value -> id
-Rule 37    value -> bool
-Rule 38    id -> ID
-Rule 39    bool -> TRUE
-Rule 40    bool -> FALSE
-Rule 41    value -> number
-Rule 42    value -> float
-Rule 43    number -> INTEGER
-Rule 44    float -> INTEGER DOT INTEGER
-Rule 45    end -> SEMICOLON
-Rule 46    end -> NEWLINE
+Rule 23    assign -> fcall ASSIGN CURLY_OPEN CURLY_CLOSE
+Rule 24    assign -> fcall ASSIGN CURLY_OPEN program CURLY_CLOSE
+Rule 25    assign -> id ASSIGN expr
+Rule 26    assign -> fcall ASSIGN expr
+Rule 27    expr -> expr PLUS expr
+Rule 28    expr -> expr MINUS expr
+Rule 29    expr -> expr MUL expr
+Rule 30    expr -> expr DIV expr
+Rule 31    expr -> expr EXPON expr
+Rule 32    expr -> value
+Rule 33    expr -> expr id
+Rule 34    expr -> PAREN_OPEN expr PAREN_CLOSE
+Rule 35    value -> MINUS value
+Rule 36    value -> STRING
+Rule 37    value -> id
+Rule 38    value -> bool
+Rule 39    id -> ID
+Rule 40    bool -> TRUE
+Rule 41    bool -> FALSE
+Rule 42    value -> number
+Rule 43    value -> float
+Rule 44    number -> INTEGER
+Rule 45    float -> INTEGER DOT INTEGER
+Rule 46    end -> SEMICOLON
+Rule 47    end -> NEWLINE
 
 Terminals, with rules where they appear
 
 ANGLE_CLOSE          : 16
 ANGLE_OPEN           : 16
 ARROW_RIGHT          : 17
-ASSIGN               : 23 24 25
-BRACKET_CLOSE        : 
-BRACKET_OPEN         : 
+ASSIGN               : 23 24 25 26
 COMMA                : 22
-CURLY_CLOSE          : 23
-CURLY_OPEN           : 23
-DIV                  : 29
-DOT                  : 44
-EQUAL                : 
-EXPON                : 30
+CURLY_CLOSE          : 23 24
+CURLY_OPEN           : 23 24
+DIV                  : 30
+DOT                  : 45
+EXPON                : 31
 FACTOR               : 14
-FALSE                : 40
+FALSE                : 41
 GREATER              : 
-GREATER_EQ           : 
 HASH                 : 
-ID                   : 38
-INTEGER              : 43 44 44
+ID                   : 39
+INTEGER              : 44 45 45
 LESS                 : 
-LESS_EQ              : 
 LIM                  : 16
-MINUS                : 27 34
-MUL                  : 28
-NEWLINE              : 46
-NOT_EQUAL            : 
+MINUS                : 28 35
+MUL                  : 29
+NEWLINE              : 47
 OR                   : 12 12
-PAREN_CLOSE          : 19 20 33
-PAREN_OPEN           : 19 20 33
-PLUS                 : 26
+PAREN_CLOSE          : 19 20 34
+PAREN_OPEN           : 19 20 34
+PLUS                 : 27
 QUOTE                : 15
 RETURN               : 13
-SEMICOLON            : 45
-STRING               : 35
-TRUE                 : 39
-UNINTEGER            : 
+SEMICOLON            : 46
+STRING               : 36
+TRUE                 : 40
 error                : 
 
 Nonterminals, with rules where they appear
 
 abs                  : 11
 assign               : 4
-bool                 : 37
+bool                 : 38
 derivate             : 9
 end                  : 3 4 5 6 7
-expr                 : 3 12 13 14 15 16 17 21 22 24 25 26 26 27 27 28 28 29 29 30 30 32 33
+expr                 : 3 12 13 14 15 16 17 21 22 25 26 27 27 28 28 29 29 30 30 31 31 33 34
 factorial            : 10
-fcall                : 5 18 23 25
-float                : 42
-id                   : 17 19 20 24 32 36
+fcall                : 5 18 23 24 26
+float                : 43
+id                   : 17 19 20 25 33 37
 limit                : 8
-number               : 41
+number               : 42
 operation            : 1 2
 params               : 19 22
-program              : 2 23 0
+program              : 2 24 0
 return               : 6
 to                   : 16
-value                : 31 34
+value                : 32 35
 
 
 state 0
@@ -141,37 +128,38 @@ state 0
     (10) expr -> . factorial
     (11) expr -> . abs
     (18) expr -> . fcall
-    (26) expr -> . expr PLUS expr
-    (27) expr -> . expr MINUS expr
-    (28) expr -> . expr MUL expr
-    (29) expr -> . expr DIV expr
-    (30) expr -> . expr EXPON expr
-    (31) expr -> . value
-    (32) expr -> . expr id
-    (33) expr -> . PAREN_OPEN expr PAREN_CLOSE
-    (23) assign -> . fcall ASSIGN CURLY_OPEN program CURLY_CLOSE
-    (24) assign -> . id ASSIGN expr
-    (25) assign -> . fcall ASSIGN expr
+    (27) expr -> . expr PLUS expr
+    (28) expr -> . expr MINUS expr
+    (29) expr -> . expr MUL expr
+    (30) expr -> . expr DIV expr
+    (31) expr -> . expr EXPON expr
+    (32) expr -> . value
+    (33) expr -> . expr id
+    (34) expr -> . PAREN_OPEN expr PAREN_CLOSE
+    (23) assign -> . fcall ASSIGN CURLY_OPEN CURLY_CLOSE
+    (24) assign -> . fcall ASSIGN CURLY_OPEN program CURLY_CLOSE
+    (25) assign -> . id ASSIGN expr
+    (26) assign -> . fcall ASSIGN expr
     (19) fcall -> . id PAREN_OPEN params PAREN_CLOSE
     (20) fcall -> . id PAREN_OPEN PAREN_CLOSE
     (13) return -> . RETURN expr
-    (45) end -> . SEMICOLON
-    (46) end -> . NEWLINE
+    (46) end -> . SEMICOLON
+    (47) end -> . NEWLINE
     (16) limit -> . LIM ANGLE_OPEN to ANGLE_CLOSE expr
     (15) derivate -> . expr QUOTE
     (14) factorial -> . expr FACTOR
     (12) abs -> . OR expr OR
-    (34) value -> . MINUS value
-    (35) value -> . STRING
-    (36) value -> . id
-    (37) value -> . bool
-    (41) value -> . number
-    (42) value -> . float
-    (38) id -> . ID
-    (39) bool -> . TRUE
-    (40) bool -> . FALSE
-    (43) number -> . INTEGER
-    (44) float -> . INTEGER DOT INTEGER
+    (35) value -> . MINUS value
+    (36) value -> . STRING
+    (37) value -> . id
+    (38) value -> . bool
+    (42) value -> . number
+    (43) value -> . float
+    (39) id -> . ID
+    (40) bool -> . TRUE
+    (41) bool -> . FALSE
+    (44) number -> . INTEGER
+    (45) float -> . INTEGER DOT INTEGER
 
     PAREN_OPEN      shift and go to state 15
     RETURN          shift and go to state 16
@@ -217,37 +205,38 @@ state 1
     (10) expr -> . factorial
     (11) expr -> . abs
     (18) expr -> . fcall
-    (26) expr -> . expr PLUS expr
-    (27) expr -> . expr MINUS expr
-    (28) expr -> . expr MUL expr
-    (29) expr -> . expr DIV expr
-    (30) expr -> . expr EXPON expr
-    (31) expr -> . value
-    (32) expr -> . expr id
-    (33) expr -> . PAREN_OPEN expr PAREN_CLOSE
-    (23) assign -> . fcall ASSIGN CURLY_OPEN program CURLY_CLOSE
-    (24) assign -> . id ASSIGN expr
-    (25) assign -> . fcall ASSIGN expr
+    (27) expr -> . expr PLUS expr
+    (28) expr -> . expr MINUS expr
+    (29) expr -> . expr MUL expr
+    (30) expr -> . expr DIV expr
+    (31) expr -> . expr EXPON expr
+    (32) expr -> . value
+    (33) expr -> . expr id
+    (34) expr -> . PAREN_OPEN expr PAREN_CLOSE
+    (23) assign -> . fcall ASSIGN CURLY_OPEN CURLY_CLOSE
+    (24) assign -> . fcall ASSIGN CURLY_OPEN program CURLY_CLOSE
+    (25) assign -> . id ASSIGN expr
+    (26) assign -> . fcall ASSIGN expr
     (19) fcall -> . id PAREN_OPEN params PAREN_CLOSE
     (20) fcall -> . id PAREN_OPEN PAREN_CLOSE
     (13) return -> . RETURN expr
-    (45) end -> . SEMICOLON
-    (46) end -> . NEWLINE
+    (46) end -> . SEMICOLON
+    (47) end -> . NEWLINE
     (16) limit -> . LIM ANGLE_OPEN to ANGLE_CLOSE expr
     (15) derivate -> . expr QUOTE
     (14) factorial -> . expr FACTOR
     (12) abs -> . OR expr OR
-    (34) value -> . MINUS value
-    (35) value -> . STRING
-    (36) value -> . id
-    (37) value -> . bool
-    (41) value -> . number
-    (42) value -> . float
-    (38) id -> . ID
-    (39) bool -> . TRUE
-    (40) bool -> . FALSE
-    (43) number -> . INTEGER
-    (44) float -> . INTEGER DOT INTEGER
+    (35) value -> . MINUS value
+    (36) value -> . STRING
+    (37) value -> . id
+    (38) value -> . bool
+    (42) value -> . number
+    (43) value -> . float
+    (39) id -> . ID
+    (40) bool -> . TRUE
+    (41) bool -> . FALSE
+    (44) number -> . INTEGER
+    (45) float -> . INTEGER DOT INTEGER
 
     PAREN_OPEN      shift and go to state 15
     RETURN          shift and go to state 16
@@ -301,17 +290,17 @@ state 2
 state 3
 
     (3) operation -> expr . end
-    (26) expr -> expr . PLUS expr
-    (27) expr -> expr . MINUS expr
-    (28) expr -> expr . MUL expr
-    (29) expr -> expr . DIV expr
-    (30) expr -> expr . EXPON expr
-    (32) expr -> expr . id
+    (27) expr -> expr . PLUS expr
+    (28) expr -> expr . MINUS expr
+    (29) expr -> expr . MUL expr
+    (30) expr -> expr . DIV expr
+    (31) expr -> expr . EXPON expr
+    (33) expr -> expr . id
     (15) derivate -> expr . QUOTE
     (14) factorial -> expr . FACTOR
-    (45) end -> . SEMICOLON
-    (46) end -> . NEWLINE
-    (38) id -> . ID
+    (46) end -> . SEMICOLON
+    (47) end -> . NEWLINE
+    (39) id -> . ID
 
     PLUS            shift and go to state 31
     MINUS           shift and go to state 32
@@ -350,8 +339,8 @@ state 4
 state 5
 
     (4) operation -> assign . end
-    (45) end -> . SEMICOLON
-    (46) end -> . NEWLINE
+    (46) end -> . SEMICOLON
+    (47) end -> . NEWLINE
 
     SEMICOLON       shift and go to state 17
     NEWLINE         shift and go to state 18
@@ -362,10 +351,11 @@ state 6
 
     (5) operation -> fcall . end
     (18) expr -> fcall .
-    (23) assign -> fcall . ASSIGN CURLY_OPEN program CURLY_CLOSE
-    (25) assign -> fcall . ASSIGN expr
-    (45) end -> . SEMICOLON
-    (46) end -> . NEWLINE
+    (23) assign -> fcall . ASSIGN CURLY_OPEN CURLY_CLOSE
+    (24) assign -> fcall . ASSIGN CURLY_OPEN program CURLY_CLOSE
+    (26) assign -> fcall . ASSIGN expr
+    (46) end -> . SEMICOLON
+    (47) end -> . NEWLINE
 
   ! shift/reduce conflict for SEMICOLON resolved as shift
   ! shift/reduce conflict for NEWLINE resolved as shift
@@ -389,8 +379,8 @@ state 6
 state 7
 
     (6) operation -> return . end
-    (45) end -> . SEMICOLON
-    (46) end -> . NEWLINE
+    (46) end -> . SEMICOLON
+    (47) end -> . NEWLINE
 
     SEMICOLON       shift and go to state 17
     NEWLINE         shift and go to state 18
@@ -479,18 +469,18 @@ state 11
 
 state 12
 
-    (34) value -> MINUS . value
-    (34) value -> . MINUS value
-    (35) value -> . STRING
-    (36) value -> . id
-    (37) value -> . bool
-    (41) value -> . number
-    (42) value -> . float
-    (38) id -> . ID
-    (39) bool -> . TRUE
-    (40) bool -> . FALSE
-    (43) number -> . INTEGER
-    (44) float -> . INTEGER DOT INTEGER
+    (35) value -> MINUS . value
+    (35) value -> . MINUS value
+    (36) value -> . STRING
+    (37) value -> . id
+    (38) value -> . bool
+    (42) value -> . number
+    (43) value -> . float
+    (39) id -> . ID
+    (40) bool -> . TRUE
+    (41) bool -> . FALSE
+    (44) number -> . INTEGER
+    (45) float -> . INTEGER DOT INTEGER
 
     MINUS           shift and go to state 12
     STRING          shift and go to state 21
@@ -507,78 +497,78 @@ state 12
 
 state 13
 
-    (31) expr -> value .
+    (32) expr -> value .
 
-    PLUS            reduce using rule 31 (expr -> value .)
-    MINUS           reduce using rule 31 (expr -> value .)
-    MUL             reduce using rule 31 (expr -> value .)
-    DIV             reduce using rule 31 (expr -> value .)
-    EXPON           reduce using rule 31 (expr -> value .)
-    QUOTE           reduce using rule 31 (expr -> value .)
-    FACTOR          reduce using rule 31 (expr -> value .)
-    SEMICOLON       reduce using rule 31 (expr -> value .)
-    NEWLINE         reduce using rule 31 (expr -> value .)
-    ID              reduce using rule 31 (expr -> value .)
-    PAREN_CLOSE     reduce using rule 31 (expr -> value .)
-    OR              reduce using rule 31 (expr -> value .)
-    COMMA           reduce using rule 31 (expr -> value .)
-    ANGLE_CLOSE     reduce using rule 31 (expr -> value .)
+    PLUS            reduce using rule 32 (expr -> value .)
+    MINUS           reduce using rule 32 (expr -> value .)
+    MUL             reduce using rule 32 (expr -> value .)
+    DIV             reduce using rule 32 (expr -> value .)
+    EXPON           reduce using rule 32 (expr -> value .)
+    QUOTE           reduce using rule 32 (expr -> value .)
+    FACTOR          reduce using rule 32 (expr -> value .)
+    SEMICOLON       reduce using rule 32 (expr -> value .)
+    NEWLINE         reduce using rule 32 (expr -> value .)
+    ID              reduce using rule 32 (expr -> value .)
+    PAREN_CLOSE     reduce using rule 32 (expr -> value .)
+    OR              reduce using rule 32 (expr -> value .)
+    COMMA           reduce using rule 32 (expr -> value .)
+    ANGLE_CLOSE     reduce using rule 32 (expr -> value .)
 
 
 state 14
 
-    (24) assign -> id . ASSIGN expr
+    (25) assign -> id . ASSIGN expr
     (19) fcall -> id . PAREN_OPEN params PAREN_CLOSE
     (20) fcall -> id . PAREN_OPEN PAREN_CLOSE
-    (36) value -> id .
+    (37) value -> id .
 
     ASSIGN          shift and go to state 45
     PAREN_OPEN      shift and go to state 46
-    PLUS            reduce using rule 36 (value -> id .)
-    MINUS           reduce using rule 36 (value -> id .)
-    MUL             reduce using rule 36 (value -> id .)
-    DIV             reduce using rule 36 (value -> id .)
-    EXPON           reduce using rule 36 (value -> id .)
-    QUOTE           reduce using rule 36 (value -> id .)
-    FACTOR          reduce using rule 36 (value -> id .)
-    SEMICOLON       reduce using rule 36 (value -> id .)
-    NEWLINE         reduce using rule 36 (value -> id .)
-    ID              reduce using rule 36 (value -> id .)
+    PLUS            reduce using rule 37 (value -> id .)
+    MINUS           reduce using rule 37 (value -> id .)
+    MUL             reduce using rule 37 (value -> id .)
+    DIV             reduce using rule 37 (value -> id .)
+    EXPON           reduce using rule 37 (value -> id .)
+    QUOTE           reduce using rule 37 (value -> id .)
+    FACTOR          reduce using rule 37 (value -> id .)
+    SEMICOLON       reduce using rule 37 (value -> id .)
+    NEWLINE         reduce using rule 37 (value -> id .)
+    ID              reduce using rule 37 (value -> id .)
 
 
 state 15
 
-    (33) expr -> PAREN_OPEN . expr PAREN_CLOSE
+    (34) expr -> PAREN_OPEN . expr PAREN_CLOSE
     (8) expr -> . limit
     (9) expr -> . derivate
     (10) expr -> . factorial
     (11) expr -> . abs
     (18) expr -> . fcall
-    (26) expr -> . expr PLUS expr
-    (27) expr -> . expr MINUS expr
-    (28) expr -> . expr MUL expr
-    (29) expr -> . expr DIV expr
-    (30) expr -> . expr EXPON expr
-    (31) expr -> . value
-    (32) expr -> . expr id
-    (33) expr -> . PAREN_OPEN expr PAREN_CLOSE
+    (27) expr -> . expr PLUS expr
+    (28) expr -> . expr MINUS expr
+    (29) expr -> . expr MUL expr
+    (30) expr -> . expr DIV expr
+    (31) expr -> . expr EXPON expr
+    (32) expr -> . value
+    (33) expr -> . expr id
+    (34) expr -> . PAREN_OPEN expr PAREN_CLOSE
     (16) limit -> . LIM ANGLE_OPEN to ANGLE_CLOSE expr
     (15) derivate -> . expr QUOTE
     (14) factorial -> . expr FACTOR
     (12) abs -> . OR expr OR
     (19) fcall -> . id PAREN_OPEN params PAREN_CLOSE
     (20) fcall -> . id PAREN_OPEN PAREN_CLOSE
-    (34) value -> . MINUS value
-    (35) value -> . STRING
-    (36) value -> . id
-    (37) value -> . bool
-    (41) value -> . number
-    (42) value -> . float
-    (38) id -> . ID
-    (39) bool -> . TRUE
-    (40) bool -> . FALSE
-    (43) number -> . INTEGER
-    (44) float -> . INTEGER DOT INTEGER
+    (35) value -> . MINUS value
+    (36) value -> . STRING
+    (37) value -> . id
+    (38) value -> . bool
+    (42) value -> . number
+    (43) value -> . float
+    (39) id -> . ID
+    (40) bool -> . TRUE
+    (41) bool -> . FALSE
+    (44) number -> . INTEGER
+    (45) float -> . INTEGER DOT INTEGER
 
     PAREN_OPEN      shift and go to state 15
     LIM             shift and go to state 19
@@ -610,31 +600,31 @@ state 16
     (10) expr -> . factorial
     (11) expr -> . abs
     (18) expr -> . fcall
-    (26) expr -> . expr PLUS expr
-    (27) expr -> . expr MINUS expr
-    (28) expr -> . expr MUL expr
-    (29) expr -> . expr DIV expr
-    (30) expr -> . expr EXPON expr
-    (31) expr -> . value
-    (32) expr -> . expr id
-    (33) expr -> . PAREN_OPEN expr PAREN_CLOSE
+    (27) expr -> . expr PLUS expr
+    (28) expr -> . expr MINUS expr
+    (29) expr -> . expr MUL expr
+    (30) expr -> . expr DIV expr
+    (31) expr -> . expr EXPON expr
+    (32) expr -> . value
+    (33) expr -> . expr id
+    (34) expr -> . PAREN_OPEN expr PAREN_CLOSE
     (16) limit -> . LIM ANGLE_OPEN to ANGLE_CLOSE expr
     (15) derivate -> . expr QUOTE
     (14) factorial -> . expr FACTOR
     (12) abs -> . OR expr OR
     (19) fcall -> . id PAREN_OPEN params PAREN_CLOSE
     (20) fcall -> . id PAREN_OPEN PAREN_CLOSE
-    (34) value -> . MINUS value
-    (35) value -> . STRING
-    (36) value -> . id
-    (37) value -> . bool
-    (41) value -> . number
-    (42) value -> . float
-    (38) id -> . ID
-    (39) bool -> . TRUE
-    (40) bool -> . FALSE
-    (43) number -> . INTEGER
-    (44) float -> . INTEGER DOT INTEGER
+    (35) value -> . MINUS value
+    (36) value -> . STRING
+    (37) value -> . id
+    (38) value -> . bool
+    (42) value -> . number
+    (43) value -> . float
+    (39) id -> . ID
+    (40) bool -> . TRUE
+    (41) bool -> . FALSE
+    (44) number -> . INTEGER
+    (45) float -> . INTEGER DOT INTEGER
 
     PAREN_OPEN      shift and go to state 15
     LIM             shift and go to state 19
@@ -660,42 +650,42 @@ state 16
 
 state 17
 
-    (45) end -> SEMICOLON .
+    (46) end -> SEMICOLON .
 
-    PAREN_OPEN      reduce using rule 45 (end -> SEMICOLON .)
-    RETURN          reduce using rule 45 (end -> SEMICOLON .)
-    SEMICOLON       reduce using rule 45 (end -> SEMICOLON .)
-    NEWLINE         reduce using rule 45 (end -> SEMICOLON .)
-    LIM             reduce using rule 45 (end -> SEMICOLON .)
-    OR              reduce using rule 45 (end -> SEMICOLON .)
-    MINUS           reduce using rule 45 (end -> SEMICOLON .)
-    STRING          reduce using rule 45 (end -> SEMICOLON .)
-    ID              reduce using rule 45 (end -> SEMICOLON .)
-    TRUE            reduce using rule 45 (end -> SEMICOLON .)
-    FALSE           reduce using rule 45 (end -> SEMICOLON .)
-    INTEGER         reduce using rule 45 (end -> SEMICOLON .)
-    $end            reduce using rule 45 (end -> SEMICOLON .)
-    CURLY_CLOSE     reduce using rule 45 (end -> SEMICOLON .)
+    PAREN_OPEN      reduce using rule 46 (end -> SEMICOLON .)
+    RETURN          reduce using rule 46 (end -> SEMICOLON .)
+    SEMICOLON       reduce using rule 46 (end -> SEMICOLON .)
+    NEWLINE         reduce using rule 46 (end -> SEMICOLON .)
+    LIM             reduce using rule 46 (end -> SEMICOLON .)
+    OR              reduce using rule 46 (end -> SEMICOLON .)
+    MINUS           reduce using rule 46 (end -> SEMICOLON .)
+    STRING          reduce using rule 46 (end -> SEMICOLON .)
+    ID              reduce using rule 46 (end -> SEMICOLON .)
+    TRUE            reduce using rule 46 (end -> SEMICOLON .)
+    FALSE           reduce using rule 46 (end -> SEMICOLON .)
+    INTEGER         reduce using rule 46 (end -> SEMICOLON .)
+    $end            reduce using rule 46 (end -> SEMICOLON .)
+    CURLY_CLOSE     reduce using rule 46 (end -> SEMICOLON .)
 
 
 state 18
 
-    (46) end -> NEWLINE .
+    (47) end -> NEWLINE .
 
-    PAREN_OPEN      reduce using rule 46 (end -> NEWLINE .)
-    RETURN          reduce using rule 46 (end -> NEWLINE .)
-    SEMICOLON       reduce using rule 46 (end -> NEWLINE .)
-    NEWLINE         reduce using rule 46 (end -> NEWLINE .)
-    LIM             reduce using rule 46 (end -> NEWLINE .)
-    OR              reduce using rule 46 (end -> NEWLINE .)
-    MINUS           reduce using rule 46 (end -> NEWLINE .)
-    STRING          reduce using rule 46 (end -> NEWLINE .)
-    ID              reduce using rule 46 (end -> NEWLINE .)
-    TRUE            reduce using rule 46 (end -> NEWLINE .)
-    FALSE           reduce using rule 46 (end -> NEWLINE .)
-    INTEGER         reduce using rule 46 (end -> NEWLINE .)
-    $end            reduce using rule 46 (end -> NEWLINE .)
-    CURLY_CLOSE     reduce using rule 46 (end -> NEWLINE .)
+    PAREN_OPEN      reduce using rule 47 (end -> NEWLINE .)
+    RETURN          reduce using rule 47 (end -> NEWLINE .)
+    SEMICOLON       reduce using rule 47 (end -> NEWLINE .)
+    NEWLINE         reduce using rule 47 (end -> NEWLINE .)
+    LIM             reduce using rule 47 (end -> NEWLINE .)
+    OR              reduce using rule 47 (end -> NEWLINE .)
+    MINUS           reduce using rule 47 (end -> NEWLINE .)
+    STRING          reduce using rule 47 (end -> NEWLINE .)
+    ID              reduce using rule 47 (end -> NEWLINE .)
+    TRUE            reduce using rule 47 (end -> NEWLINE .)
+    FALSE           reduce using rule 47 (end -> NEWLINE .)
+    INTEGER         reduce using rule 47 (end -> NEWLINE .)
+    $end            reduce using rule 47 (end -> NEWLINE .)
+    CURLY_CLOSE     reduce using rule 47 (end -> NEWLINE .)
 
 
 state 19
@@ -713,31 +703,31 @@ state 20
     (10) expr -> . factorial
     (11) expr -> . abs
     (18) expr -> . fcall
-    (26) expr -> . expr PLUS expr
-    (27) expr -> . expr MINUS expr
-    (28) expr -> . expr MUL expr
-    (29) expr -> . expr DIV expr
-    (30) expr -> . expr EXPON expr
-    (31) expr -> . value
-    (32) expr -> . expr id
-    (33) expr -> . PAREN_OPEN expr PAREN_CLOSE
+    (27) expr -> . expr PLUS expr
+    (28) expr -> . expr MINUS expr
+    (29) expr -> . expr MUL expr
+    (30) expr -> . expr DIV expr
+    (31) expr -> . expr EXPON expr
+    (32) expr -> . value
+    (33) expr -> . expr id
+    (34) expr -> . PAREN_OPEN expr PAREN_CLOSE
     (16) limit -> . LIM ANGLE_OPEN to ANGLE_CLOSE expr
     (15) derivate -> . expr QUOTE
     (14) factorial -> . expr FACTOR
     (12) abs -> . OR expr OR
     (19) fcall -> . id PAREN_OPEN params PAREN_CLOSE
     (20) fcall -> . id PAREN_OPEN PAREN_CLOSE
-    (34) value -> . MINUS value
-    (35) value -> . STRING
-    (36) value -> . id
-    (37) value -> . bool
-    (41) value -> . number
-    (42) value -> . float
-    (38) id -> . ID
-    (39) bool -> . TRUE
-    (40) bool -> . FALSE
-    (43) number -> . INTEGER
-    (44) float -> . INTEGER DOT INTEGER
+    (35) value -> . MINUS value
+    (36) value -> . STRING
+    (37) value -> . id
+    (38) value -> . bool
+    (42) value -> . number
+    (43) value -> . float
+    (39) id -> . ID
+    (40) bool -> . TRUE
+    (41) bool -> . FALSE
+    (44) number -> . INTEGER
+    (45) float -> . INTEGER DOT INTEGER
 
     PAREN_OPEN      shift and go to state 15
     LIM             shift and go to state 19
@@ -763,166 +753,166 @@ state 20
 
 state 21
 
-    (35) value -> STRING .
+    (36) value -> STRING .
 
-    PLUS            reduce using rule 35 (value -> STRING .)
-    MINUS           reduce using rule 35 (value -> STRING .)
-    MUL             reduce using rule 35 (value -> STRING .)
-    DIV             reduce using rule 35 (value -> STRING .)
-    EXPON           reduce using rule 35 (value -> STRING .)
-    QUOTE           reduce using rule 35 (value -> STRING .)
-    FACTOR          reduce using rule 35 (value -> STRING .)
-    SEMICOLON       reduce using rule 35 (value -> STRING .)
-    NEWLINE         reduce using rule 35 (value -> STRING .)
-    ID              reduce using rule 35 (value -> STRING .)
-    PAREN_CLOSE     reduce using rule 35 (value -> STRING .)
-    OR              reduce using rule 35 (value -> STRING .)
-    COMMA           reduce using rule 35 (value -> STRING .)
-    ANGLE_CLOSE     reduce using rule 35 (value -> STRING .)
+    PLUS            reduce using rule 36 (value -> STRING .)
+    MINUS           reduce using rule 36 (value -> STRING .)
+    MUL             reduce using rule 36 (value -> STRING .)
+    DIV             reduce using rule 36 (value -> STRING .)
+    EXPON           reduce using rule 36 (value -> STRING .)
+    QUOTE           reduce using rule 36 (value -> STRING .)
+    FACTOR          reduce using rule 36 (value -> STRING .)
+    SEMICOLON       reduce using rule 36 (value -> STRING .)
+    NEWLINE         reduce using rule 36 (value -> STRING .)
+    ID              reduce using rule 36 (value -> STRING .)
+    PAREN_CLOSE     reduce using rule 36 (value -> STRING .)
+    OR              reduce using rule 36 (value -> STRING .)
+    COMMA           reduce using rule 36 (value -> STRING .)
+    ANGLE_CLOSE     reduce using rule 36 (value -> STRING .)
 
 
 state 22
 
-    (37) value -> bool .
+    (38) value -> bool .
 
-    PLUS            reduce using rule 37 (value -> bool .)
-    MINUS           reduce using rule 37 (value -> bool .)
-    MUL             reduce using rule 37 (value -> bool .)
-    DIV             reduce using rule 37 (value -> bool .)
-    EXPON           reduce using rule 37 (value -> bool .)
-    QUOTE           reduce using rule 37 (value -> bool .)
-    FACTOR          reduce using rule 37 (value -> bool .)
-    SEMICOLON       reduce using rule 37 (value -> bool .)
-    NEWLINE         reduce using rule 37 (value -> bool .)
-    ID              reduce using rule 37 (value -> bool .)
-    PAREN_CLOSE     reduce using rule 37 (value -> bool .)
-    OR              reduce using rule 37 (value -> bool .)
-    COMMA           reduce using rule 37 (value -> bool .)
-    ANGLE_CLOSE     reduce using rule 37 (value -> bool .)
+    PLUS            reduce using rule 38 (value -> bool .)
+    MINUS           reduce using rule 38 (value -> bool .)
+    MUL             reduce using rule 38 (value -> bool .)
+    DIV             reduce using rule 38 (value -> bool .)
+    EXPON           reduce using rule 38 (value -> bool .)
+    QUOTE           reduce using rule 38 (value -> bool .)
+    FACTOR          reduce using rule 38 (value -> bool .)
+    SEMICOLON       reduce using rule 38 (value -> bool .)
+    NEWLINE         reduce using rule 38 (value -> bool .)
+    ID              reduce using rule 38 (value -> bool .)
+    PAREN_CLOSE     reduce using rule 38 (value -> bool .)
+    OR              reduce using rule 38 (value -> bool .)
+    COMMA           reduce using rule 38 (value -> bool .)
+    ANGLE_CLOSE     reduce using rule 38 (value -> bool .)
 
 
 state 23
 
-    (41) value -> number .
+    (42) value -> number .
 
-    PLUS            reduce using rule 41 (value -> number .)
-    MINUS           reduce using rule 41 (value -> number .)
-    MUL             reduce using rule 41 (value -> number .)
-    DIV             reduce using rule 41 (value -> number .)
-    EXPON           reduce using rule 41 (value -> number .)
-    QUOTE           reduce using rule 41 (value -> number .)
-    FACTOR          reduce using rule 41 (value -> number .)
-    SEMICOLON       reduce using rule 41 (value -> number .)
-    NEWLINE         reduce using rule 41 (value -> number .)
-    ID              reduce using rule 41 (value -> number .)
-    PAREN_CLOSE     reduce using rule 41 (value -> number .)
-    OR              reduce using rule 41 (value -> number .)
-    COMMA           reduce using rule 41 (value -> number .)
-    ANGLE_CLOSE     reduce using rule 41 (value -> number .)
+    PLUS            reduce using rule 42 (value -> number .)
+    MINUS           reduce using rule 42 (value -> number .)
+    MUL             reduce using rule 42 (value -> number .)
+    DIV             reduce using rule 42 (value -> number .)
+    EXPON           reduce using rule 42 (value -> number .)
+    QUOTE           reduce using rule 42 (value -> number .)
+    FACTOR          reduce using rule 42 (value -> number .)
+    SEMICOLON       reduce using rule 42 (value -> number .)
+    NEWLINE         reduce using rule 42 (value -> number .)
+    ID              reduce using rule 42 (value -> number .)
+    PAREN_CLOSE     reduce using rule 42 (value -> number .)
+    OR              reduce using rule 42 (value -> number .)
+    COMMA           reduce using rule 42 (value -> number .)
+    ANGLE_CLOSE     reduce using rule 42 (value -> number .)
 
 
 state 24
 
-    (42) value -> float .
+    (43) value -> float .
 
-    PLUS            reduce using rule 42 (value -> float .)
-    MINUS           reduce using rule 42 (value -> float .)
-    MUL             reduce using rule 42 (value -> float .)
-    DIV             reduce using rule 42 (value -> float .)
-    EXPON           reduce using rule 42 (value -> float .)
-    QUOTE           reduce using rule 42 (value -> float .)
-    FACTOR          reduce using rule 42 (value -> float .)
-    SEMICOLON       reduce using rule 42 (value -> float .)
-    NEWLINE         reduce using rule 42 (value -> float .)
-    ID              reduce using rule 42 (value -> float .)
-    PAREN_CLOSE     reduce using rule 42 (value -> float .)
-    OR              reduce using rule 42 (value -> float .)
-    COMMA           reduce using rule 42 (value -> float .)
-    ANGLE_CLOSE     reduce using rule 42 (value -> float .)
+    PLUS            reduce using rule 43 (value -> float .)
+    MINUS           reduce using rule 43 (value -> float .)
+    MUL             reduce using rule 43 (value -> float .)
+    DIV             reduce using rule 43 (value -> float .)
+    EXPON           reduce using rule 43 (value -> float .)
+    QUOTE           reduce using rule 43 (value -> float .)
+    FACTOR          reduce using rule 43 (value -> float .)
+    SEMICOLON       reduce using rule 43 (value -> float .)
+    NEWLINE         reduce using rule 43 (value -> float .)
+    ID              reduce using rule 43 (value -> float .)
+    PAREN_CLOSE     reduce using rule 43 (value -> float .)
+    OR              reduce using rule 43 (value -> float .)
+    COMMA           reduce using rule 43 (value -> float .)
+    ANGLE_CLOSE     reduce using rule 43 (value -> float .)
 
 
 state 25
 
-    (38) id -> ID .
+    (39) id -> ID .
 
-    ASSIGN          reduce using rule 38 (id -> ID .)
-    PAREN_OPEN      reduce using rule 38 (id -> ID .)
-    PLUS            reduce using rule 38 (id -> ID .)
-    MINUS           reduce using rule 38 (id -> ID .)
-    MUL             reduce using rule 38 (id -> ID .)
-    DIV             reduce using rule 38 (id -> ID .)
-    EXPON           reduce using rule 38 (id -> ID .)
-    QUOTE           reduce using rule 38 (id -> ID .)
-    FACTOR          reduce using rule 38 (id -> ID .)
-    SEMICOLON       reduce using rule 38 (id -> ID .)
-    NEWLINE         reduce using rule 38 (id -> ID .)
-    ID              reduce using rule 38 (id -> ID .)
-    PAREN_CLOSE     reduce using rule 38 (id -> ID .)
-    OR              reduce using rule 38 (id -> ID .)
-    COMMA           reduce using rule 38 (id -> ID .)
-    ANGLE_CLOSE     reduce using rule 38 (id -> ID .)
-    ARROW_RIGHT     reduce using rule 38 (id -> ID .)
+    ASSIGN          reduce using rule 39 (id -> ID .)
+    PAREN_OPEN      reduce using rule 39 (id -> ID .)
+    PLUS            reduce using rule 39 (id -> ID .)
+    MINUS           reduce using rule 39 (id -> ID .)
+    MUL             reduce using rule 39 (id -> ID .)
+    DIV             reduce using rule 39 (id -> ID .)
+    EXPON           reduce using rule 39 (id -> ID .)
+    QUOTE           reduce using rule 39 (id -> ID .)
+    FACTOR          reduce using rule 39 (id -> ID .)
+    SEMICOLON       reduce using rule 39 (id -> ID .)
+    NEWLINE         reduce using rule 39 (id -> ID .)
+    ID              reduce using rule 39 (id -> ID .)
+    PAREN_CLOSE     reduce using rule 39 (id -> ID .)
+    OR              reduce using rule 39 (id -> ID .)
+    COMMA           reduce using rule 39 (id -> ID .)
+    ANGLE_CLOSE     reduce using rule 39 (id -> ID .)
+    ARROW_RIGHT     reduce using rule 39 (id -> ID .)
 
 
 state 26
 
-    (39) bool -> TRUE .
+    (40) bool -> TRUE .
 
-    PLUS            reduce using rule 39 (bool -> TRUE .)
-    MINUS           reduce using rule 39 (bool -> TRUE .)
-    MUL             reduce using rule 39 (bool -> TRUE .)
-    DIV             reduce using rule 39 (bool -> TRUE .)
-    EXPON           reduce using rule 39 (bool -> TRUE .)
-    QUOTE           reduce using rule 39 (bool -> TRUE .)
-    FACTOR          reduce using rule 39 (bool -> TRUE .)
-    SEMICOLON       reduce using rule 39 (bool -> TRUE .)
-    NEWLINE         reduce using rule 39 (bool -> TRUE .)
-    ID              reduce using rule 39 (bool -> TRUE .)
-    PAREN_CLOSE     reduce using rule 39 (bool -> TRUE .)
-    OR              reduce using rule 39 (bool -> TRUE .)
-    COMMA           reduce using rule 39 (bool -> TRUE .)
-    ANGLE_CLOSE     reduce using rule 39 (bool -> TRUE .)
+    PLUS            reduce using rule 40 (bool -> TRUE .)
+    MINUS           reduce using rule 40 (bool -> TRUE .)
+    MUL             reduce using rule 40 (bool -> TRUE .)
+    DIV             reduce using rule 40 (bool -> TRUE .)
+    EXPON           reduce using rule 40 (bool -> TRUE .)
+    QUOTE           reduce using rule 40 (bool -> TRUE .)
+    FACTOR          reduce using rule 40 (bool -> TRUE .)
+    SEMICOLON       reduce using rule 40 (bool -> TRUE .)
+    NEWLINE         reduce using rule 40 (bool -> TRUE .)
+    ID              reduce using rule 40 (bool -> TRUE .)
+    PAREN_CLOSE     reduce using rule 40 (bool -> TRUE .)
+    OR              reduce using rule 40 (bool -> TRUE .)
+    COMMA           reduce using rule 40 (bool -> TRUE .)
+    ANGLE_CLOSE     reduce using rule 40 (bool -> TRUE .)
 
 
 state 27
 
-    (40) bool -> FALSE .
+    (41) bool -> FALSE .
 
-    PLUS            reduce using rule 40 (bool -> FALSE .)
-    MINUS           reduce using rule 40 (bool -> FALSE .)
-    MUL             reduce using rule 40 (bool -> FALSE .)
-    DIV             reduce using rule 40 (bool -> FALSE .)
-    EXPON           reduce using rule 40 (bool -> FALSE .)
-    QUOTE           reduce using rule 40 (bool -> FALSE .)
-    FACTOR          reduce using rule 40 (bool -> FALSE .)
-    SEMICOLON       reduce using rule 40 (bool -> FALSE .)
-    NEWLINE         reduce using rule 40 (bool -> FALSE .)
-    ID              reduce using rule 40 (bool -> FALSE .)
-    PAREN_CLOSE     reduce using rule 40 (bool -> FALSE .)
-    OR              reduce using rule 40 (bool -> FALSE .)
-    COMMA           reduce using rule 40 (bool -> FALSE .)
-    ANGLE_CLOSE     reduce using rule 40 (bool -> FALSE .)
+    PLUS            reduce using rule 41 (bool -> FALSE .)
+    MINUS           reduce using rule 41 (bool -> FALSE .)
+    MUL             reduce using rule 41 (bool -> FALSE .)
+    DIV             reduce using rule 41 (bool -> FALSE .)
+    EXPON           reduce using rule 41 (bool -> FALSE .)
+    QUOTE           reduce using rule 41 (bool -> FALSE .)
+    FACTOR          reduce using rule 41 (bool -> FALSE .)
+    SEMICOLON       reduce using rule 41 (bool -> FALSE .)
+    NEWLINE         reduce using rule 41 (bool -> FALSE .)
+    ID              reduce using rule 41 (bool -> FALSE .)
+    PAREN_CLOSE     reduce using rule 41 (bool -> FALSE .)
+    OR              reduce using rule 41 (bool -> FALSE .)
+    COMMA           reduce using rule 41 (bool -> FALSE .)
+    ANGLE_CLOSE     reduce using rule 41 (bool -> FALSE .)
 
 
 state 28
 
-    (43) number -> INTEGER .
-    (44) float -> INTEGER . DOT INTEGER
+    (44) number -> INTEGER .
+    (45) float -> INTEGER . DOT INTEGER
 
-    PLUS            reduce using rule 43 (number -> INTEGER .)
-    MINUS           reduce using rule 43 (number -> INTEGER .)
-    MUL             reduce using rule 43 (number -> INTEGER .)
-    DIV             reduce using rule 43 (number -> INTEGER .)
-    EXPON           reduce using rule 43 (number -> INTEGER .)
-    QUOTE           reduce using rule 43 (number -> INTEGER .)
-    FACTOR          reduce using rule 43 (number -> INTEGER .)
-    SEMICOLON       reduce using rule 43 (number -> INTEGER .)
-    NEWLINE         reduce using rule 43 (number -> INTEGER .)
-    ID              reduce using rule 43 (number -> INTEGER .)
-    PAREN_CLOSE     reduce using rule 43 (number -> INTEGER .)
-    OR              reduce using rule 43 (number -> INTEGER .)
-    COMMA           reduce using rule 43 (number -> INTEGER .)
-    ANGLE_CLOSE     reduce using rule 43 (number -> INTEGER .)
+    PLUS            reduce using rule 44 (number -> INTEGER .)
+    MINUS           reduce using rule 44 (number -> INTEGER .)
+    MUL             reduce using rule 44 (number -> INTEGER .)
+    DIV             reduce using rule 44 (number -> INTEGER .)
+    EXPON           reduce using rule 44 (number -> INTEGER .)
+    QUOTE           reduce using rule 44 (number -> INTEGER .)
+    FACTOR          reduce using rule 44 (number -> INTEGER .)
+    SEMICOLON       reduce using rule 44 (number -> INTEGER .)
+    NEWLINE         reduce using rule 44 (number -> INTEGER .)
+    ID              reduce using rule 44 (number -> INTEGER .)
+    PAREN_CLOSE     reduce using rule 44 (number -> INTEGER .)
+    OR              reduce using rule 44 (number -> INTEGER .)
+    COMMA           reduce using rule 44 (number -> INTEGER .)
+    ANGLE_CLOSE     reduce using rule 44 (number -> INTEGER .)
     DOT             shift and go to state 53
 
 
@@ -968,37 +958,37 @@ state 30
 
 state 31
 
-    (26) expr -> expr PLUS . expr
+    (27) expr -> expr PLUS . expr
     (8) expr -> . limit
     (9) expr -> . derivate
     (10) expr -> . factorial
     (11) expr -> . abs
     (18) expr -> . fcall
-    (26) expr -> . expr PLUS expr
-    (27) expr -> . expr MINUS expr
-    (28) expr -> . expr MUL expr
-    (29) expr -> . expr DIV expr
-    (30) expr -> . expr EXPON expr
-    (31) expr -> . value
-    (32) expr -> . expr id
-    (33) expr -> . PAREN_OPEN expr PAREN_CLOSE
+    (27) expr -> . expr PLUS expr
+    (28) expr -> . expr MINUS expr
+    (29) expr -> . expr MUL expr
+    (30) expr -> . expr DIV expr
+    (31) expr -> . expr EXPON expr
+    (32) expr -> . value
+    (33) expr -> . expr id
+    (34) expr -> . PAREN_OPEN expr PAREN_CLOSE
     (16) limit -> . LIM ANGLE_OPEN to ANGLE_CLOSE expr
     (15) derivate -> . expr QUOTE
     (14) factorial -> . expr FACTOR
     (12) abs -> . OR expr OR
     (19) fcall -> . id PAREN_OPEN params PAREN_CLOSE
     (20) fcall -> . id PAREN_OPEN PAREN_CLOSE
-    (34) value -> . MINUS value
-    (35) value -> . STRING
-    (36) value -> . id
-    (37) value -> . bool
-    (41) value -> . number
-    (42) value -> . float
-    (38) id -> . ID
-    (39) bool -> . TRUE
-    (40) bool -> . FALSE
-    (43) number -> . INTEGER
-    (44) float -> . INTEGER DOT INTEGER
+    (35) value -> . MINUS value
+    (36) value -> . STRING
+    (37) value -> . id
+    (38) value -> . bool
+    (42) value -> . number
+    (43) value -> . float
+    (39) id -> . ID
+    (40) bool -> . TRUE
+    (41) bool -> . FALSE
+    (44) number -> . INTEGER
+    (45) float -> . INTEGER DOT INTEGER
 
     PAREN_OPEN      shift and go to state 15
     LIM             shift and go to state 19
@@ -1024,37 +1014,37 @@ state 31
 
 state 32
 
-    (27) expr -> expr MINUS . expr
+    (28) expr -> expr MINUS . expr
     (8) expr -> . limit
     (9) expr -> . derivate
     (10) expr -> . factorial
     (11) expr -> . abs
     (18) expr -> . fcall
-    (26) expr -> . expr PLUS expr
-    (27) expr -> . expr MINUS expr
-    (28) expr -> . expr MUL expr
-    (29) expr -> . expr DIV expr
-    (30) expr -> . expr EXPON expr
-    (31) expr -> . value
-    (32) expr -> . expr id
-    (33) expr -> . PAREN_OPEN expr PAREN_CLOSE
+    (27) expr -> . expr PLUS expr
+    (28) expr -> . expr MINUS expr
+    (29) expr -> . expr MUL expr
+    (30) expr -> . expr DIV expr
+    (31) expr -> . expr EXPON expr
+    (32) expr -> . value
+    (33) expr -> . expr id
+    (34) expr -> . PAREN_OPEN expr PAREN_CLOSE
     (16) limit -> . LIM ANGLE_OPEN to ANGLE_CLOSE expr
     (15) derivate -> . expr QUOTE
     (14) factorial -> . expr FACTOR
     (12) abs -> . OR expr OR
     (19) fcall -> . id PAREN_OPEN params PAREN_CLOSE
     (20) fcall -> . id PAREN_OPEN PAREN_CLOSE
-    (34) value -> . MINUS value
-    (35) value -> . STRING
-    (36) value -> . id
-    (37) value -> . bool
-    (41) value -> . number
-    (42) value -> . float
-    (38) id -> . ID
-    (39) bool -> . TRUE
-    (40) bool -> . FALSE
-    (43) number -> . INTEGER
-    (44) float -> . INTEGER DOT INTEGER
+    (35) value -> . MINUS value
+    (36) value -> . STRING
+    (37) value -> . id
+    (38) value -> . bool
+    (42) value -> . number
+    (43) value -> . float
+    (39) id -> . ID
+    (40) bool -> . TRUE
+    (41) bool -> . FALSE
+    (44) number -> . INTEGER
+    (45) float -> . INTEGER DOT INTEGER
 
     PAREN_OPEN      shift and go to state 15
     LIM             shift and go to state 19
@@ -1080,37 +1070,37 @@ state 32
 
 state 33
 
-    (28) expr -> expr MUL . expr
+    (29) expr -> expr MUL . expr
     (8) expr -> . limit
     (9) expr -> . derivate
     (10) expr -> . factorial
     (11) expr -> . abs
     (18) expr -> . fcall
-    (26) expr -> . expr PLUS expr
-    (27) expr -> . expr MINUS expr
-    (28) expr -> . expr MUL expr
-    (29) expr -> . expr DIV expr
-    (30) expr -> . expr EXPON expr
-    (31) expr -> . value
-    (32) expr -> . expr id
-    (33) expr -> . PAREN_OPEN expr PAREN_CLOSE
+    (27) expr -> . expr PLUS expr
+    (28) expr -> . expr MINUS expr
+    (29) expr -> . expr MUL expr
+    (30) expr -> . expr DIV expr
+    (31) expr -> . expr EXPON expr
+    (32) expr -> . value
+    (33) expr -> . expr id
+    (34) expr -> . PAREN_OPEN expr PAREN_CLOSE
     (16) limit -> . LIM ANGLE_OPEN to ANGLE_CLOSE expr
     (15) derivate -> . expr QUOTE
     (14) factorial -> . expr FACTOR
     (12) abs -> . OR expr OR
     (19) fcall -> . id PAREN_OPEN params PAREN_CLOSE
     (20) fcall -> . id PAREN_OPEN PAREN_CLOSE
-    (34) value -> . MINUS value
-    (35) value -> . STRING
-    (36) value -> . id
-    (37) value -> . bool
-    (41) value -> . number
-    (42) value -> . float
-    (38) id -> . ID
-    (39) bool -> . TRUE
-    (40) bool -> . FALSE
-    (43) number -> . INTEGER
-    (44) float -> . INTEGER DOT INTEGER
+    (35) value -> . MINUS value
+    (36) value -> . STRING
+    (37) value -> . id
+    (38) value -> . bool
+    (42) value -> . number
+    (43) value -> . float
+    (39) id -> . ID
+    (40) bool -> . TRUE
+    (41) bool -> . FALSE
+    (44) number -> . INTEGER
+    (45) float -> . INTEGER DOT INTEGER
 
     PAREN_OPEN      shift and go to state 15
     LIM             shift and go to state 19
@@ -1136,37 +1126,37 @@ state 33
 
 state 34
 
-    (29) expr -> expr DIV . expr
+    (30) expr -> expr DIV . expr
     (8) expr -> . limit
     (9) expr -> . derivate
     (10) expr -> . factorial
     (11) expr -> . abs
     (18) expr -> . fcall
-    (26) expr -> . expr PLUS expr
-    (27) expr -> . expr MINUS expr
-    (28) expr -> . expr MUL expr
-    (29) expr -> . expr DIV expr
-    (30) expr -> . expr EXPON expr
-    (31) expr -> . value
-    (32) expr -> . expr id
-    (33) expr -> . PAREN_OPEN expr PAREN_CLOSE
+    (27) expr -> . expr PLUS expr
+    (28) expr -> . expr MINUS expr
+    (29) expr -> . expr MUL expr
+    (30) expr -> . expr DIV expr
+    (31) expr -> . expr EXPON expr
+    (32) expr -> . value
+    (33) expr -> . expr id
+    (34) expr -> . PAREN_OPEN expr PAREN_CLOSE
     (16) limit -> . LIM ANGLE_OPEN to ANGLE_CLOSE expr
     (15) derivate -> . expr QUOTE
     (14) factorial -> . expr FACTOR
     (12) abs -> . OR expr OR
     (19) fcall -> . id PAREN_OPEN params PAREN_CLOSE
     (20) fcall -> . id PAREN_OPEN PAREN_CLOSE
-    (34) value -> . MINUS value
-    (35) value -> . STRING
-    (36) value -> . id
-    (37) value -> . bool
-    (41) value -> . number
-    (42) value -> . float
-    (38) id -> . ID
-    (39) bool -> . TRUE
-    (40) bool -> . FALSE
-    (43) number -> . INTEGER
-    (44) float -> . INTEGER DOT INTEGER
+    (35) value -> . MINUS value
+    (36) value -> . STRING
+    (37) value -> . id
+    (38) value -> . bool
+    (42) value -> . number
+    (43) value -> . float
+    (39) id -> . ID
+    (40) bool -> . TRUE
+    (41) bool -> . FALSE
+    (44) number -> . INTEGER
+    (45) float -> . INTEGER DOT INTEGER
 
     PAREN_OPEN      shift and go to state 15
     LIM             shift and go to state 19
@@ -1192,37 +1182,37 @@ state 34
 
 state 35
 
-    (30) expr -> expr EXPON . expr
+    (31) expr -> expr EXPON . expr
     (8) expr -> . limit
     (9) expr -> . derivate
     (10) expr -> . factorial
     (11) expr -> . abs
     (18) expr -> . fcall
-    (26) expr -> . expr PLUS expr
-    (27) expr -> . expr MINUS expr
-    (28) expr -> . expr MUL expr
-    (29) expr -> . expr DIV expr
-    (30) expr -> . expr EXPON expr
-    (31) expr -> . value
-    (32) expr -> . expr id
-    (33) expr -> . PAREN_OPEN expr PAREN_CLOSE
+    (27) expr -> . expr PLUS expr
+    (28) expr -> . expr MINUS expr
+    (29) expr -> . expr MUL expr
+    (30) expr -> . expr DIV expr
+    (31) expr -> . expr EXPON expr
+    (32) expr -> . value
+    (33) expr -> . expr id
+    (34) expr -> . PAREN_OPEN expr PAREN_CLOSE
     (16) limit -> . LIM ANGLE_OPEN to ANGLE_CLOSE expr
     (15) derivate -> . expr QUOTE
     (14) factorial -> . expr FACTOR
     (12) abs -> . OR expr OR
     (19) fcall -> . id PAREN_OPEN params PAREN_CLOSE
     (20) fcall -> . id PAREN_OPEN PAREN_CLOSE
-    (34) value -> . MINUS value
-    (35) value -> . STRING
-    (36) value -> . id
-    (37) value -> . bool
-    (41) value -> . number
-    (42) value -> . float
-    (38) id -> . ID
-    (39) bool -> . TRUE
-    (40) bool -> . FALSE
-    (43) number -> . INTEGER
-    (44) float -> . INTEGER DOT INTEGER
+    (35) value -> . MINUS value
+    (36) value -> . STRING
+    (37) value -> . id
+    (38) value -> . bool
+    (42) value -> . number
+    (43) value -> . float
+    (39) id -> . ID
+    (40) bool -> . TRUE
+    (41) bool -> . FALSE
+    (44) number -> . INTEGER
+    (45) float -> . INTEGER DOT INTEGER
 
     PAREN_OPEN      shift and go to state 15
     LIM             shift and go to state 19
@@ -1248,22 +1238,22 @@ state 35
 
 state 36
 
-    (32) expr -> expr id .
+    (33) expr -> expr id .
 
-    PLUS            reduce using rule 32 (expr -> expr id .)
-    MINUS           reduce using rule 32 (expr -> expr id .)
-    MUL             reduce using rule 32 (expr -> expr id .)
-    DIV             reduce using rule 32 (expr -> expr id .)
-    EXPON           reduce using rule 32 (expr -> expr id .)
-    QUOTE           reduce using rule 32 (expr -> expr id .)
-    FACTOR          reduce using rule 32 (expr -> expr id .)
-    SEMICOLON       reduce using rule 32 (expr -> expr id .)
-    NEWLINE         reduce using rule 32 (expr -> expr id .)
-    ID              reduce using rule 32 (expr -> expr id .)
-    PAREN_CLOSE     reduce using rule 32 (expr -> expr id .)
-    OR              reduce using rule 32 (expr -> expr id .)
-    COMMA           reduce using rule 32 (expr -> expr id .)
-    ANGLE_CLOSE     reduce using rule 32 (expr -> expr id .)
+    PLUS            reduce using rule 33 (expr -> expr id .)
+    MINUS           reduce using rule 33 (expr -> expr id .)
+    MUL             reduce using rule 33 (expr -> expr id .)
+    DIV             reduce using rule 33 (expr -> expr id .)
+    EXPON           reduce using rule 33 (expr -> expr id .)
+    QUOTE           reduce using rule 33 (expr -> expr id .)
+    FACTOR          reduce using rule 33 (expr -> expr id .)
+    SEMICOLON       reduce using rule 33 (expr -> expr id .)
+    NEWLINE         reduce using rule 33 (expr -> expr id .)
+    ID              reduce using rule 33 (expr -> expr id .)
+    PAREN_CLOSE     reduce using rule 33 (expr -> expr id .)
+    OR              reduce using rule 33 (expr -> expr id .)
+    COMMA           reduce using rule 33 (expr -> expr id .)
+    ANGLE_CLOSE     reduce using rule 33 (expr -> expr id .)
 
 
 state 37
@@ -1348,38 +1338,39 @@ state 40
 
 state 41
 
-    (23) assign -> fcall ASSIGN . CURLY_OPEN program CURLY_CLOSE
-    (25) assign -> fcall ASSIGN . expr
+    (23) assign -> fcall ASSIGN . CURLY_OPEN CURLY_CLOSE
+    (24) assign -> fcall ASSIGN . CURLY_OPEN program CURLY_CLOSE
+    (26) assign -> fcall ASSIGN . expr
     (8) expr -> . limit
     (9) expr -> . derivate
     (10) expr -> . factorial
     (11) expr -> . abs
     (18) expr -> . fcall
-    (26) expr -> . expr PLUS expr
-    (27) expr -> . expr MINUS expr
-    (28) expr -> . expr MUL expr
-    (29) expr -> . expr DIV expr
-    (30) expr -> . expr EXPON expr
-    (31) expr -> . value
-    (32) expr -> . expr id
-    (33) expr -> . PAREN_OPEN expr PAREN_CLOSE
+    (27) expr -> . expr PLUS expr
+    (28) expr -> . expr MINUS expr
+    (29) expr -> . expr MUL expr
+    (30) expr -> . expr DIV expr
+    (31) expr -> . expr EXPON expr
+    (32) expr -> . value
+    (33) expr -> . expr id
+    (34) expr -> . PAREN_OPEN expr PAREN_CLOSE
     (16) limit -> . LIM ANGLE_OPEN to ANGLE_CLOSE expr
     (15) derivate -> . expr QUOTE
     (14) factorial -> . expr FACTOR
     (12) abs -> . OR expr OR
     (19) fcall -> . id PAREN_OPEN params PAREN_CLOSE
     (20) fcall -> . id PAREN_OPEN PAREN_CLOSE
-    (34) value -> . MINUS value
-    (35) value -> . STRING
-    (36) value -> . id
-    (37) value -> . bool
-    (41) value -> . number
-    (42) value -> . float
-    (38) id -> . ID
-    (39) bool -> . TRUE
-    (40) bool -> . FALSE
-    (43) number -> . INTEGER
-    (44) float -> . INTEGER DOT INTEGER
+    (35) value -> . MINUS value
+    (36) value -> . STRING
+    (37) value -> . id
+    (38) value -> . bool
+    (42) value -> . number
+    (43) value -> . float
+    (39) id -> . ID
+    (40) bool -> . TRUE
+    (41) bool -> . FALSE
+    (44) number -> . INTEGER
+    (45) float -> . INTEGER DOT INTEGER
 
     CURLY_OPEN      shift and go to state 59
     PAREN_OPEN      shift and go to state 15
@@ -1426,77 +1417,77 @@ state 42
 
 state 43
 
-    (34) value -> MINUS value .
+    (35) value -> MINUS value .
 
-    PLUS            reduce using rule 34 (value -> MINUS value .)
-    MINUS           reduce using rule 34 (value -> MINUS value .)
-    MUL             reduce using rule 34 (value -> MINUS value .)
-    DIV             reduce using rule 34 (value -> MINUS value .)
-    EXPON           reduce using rule 34 (value -> MINUS value .)
-    QUOTE           reduce using rule 34 (value -> MINUS value .)
-    FACTOR          reduce using rule 34 (value -> MINUS value .)
-    SEMICOLON       reduce using rule 34 (value -> MINUS value .)
-    NEWLINE         reduce using rule 34 (value -> MINUS value .)
-    ID              reduce using rule 34 (value -> MINUS value .)
-    PAREN_CLOSE     reduce using rule 34 (value -> MINUS value .)
-    OR              reduce using rule 34 (value -> MINUS value .)
-    COMMA           reduce using rule 34 (value -> MINUS value .)
-    ANGLE_CLOSE     reduce using rule 34 (value -> MINUS value .)
+    PLUS            reduce using rule 35 (value -> MINUS value .)
+    MINUS           reduce using rule 35 (value -> MINUS value .)
+    MUL             reduce using rule 35 (value -> MINUS value .)
+    DIV             reduce using rule 35 (value -> MINUS value .)
+    EXPON           reduce using rule 35 (value -> MINUS value .)
+    QUOTE           reduce using rule 35 (value -> MINUS value .)
+    FACTOR          reduce using rule 35 (value -> MINUS value .)
+    SEMICOLON       reduce using rule 35 (value -> MINUS value .)
+    NEWLINE         reduce using rule 35 (value -> MINUS value .)
+    ID              reduce using rule 35 (value -> MINUS value .)
+    PAREN_CLOSE     reduce using rule 35 (value -> MINUS value .)
+    OR              reduce using rule 35 (value -> MINUS value .)
+    COMMA           reduce using rule 35 (value -> MINUS value .)
+    ANGLE_CLOSE     reduce using rule 35 (value -> MINUS value .)
 
 
 state 44
 
-    (36) value -> id .
+    (37) value -> id .
 
-    PLUS            reduce using rule 36 (value -> id .)
-    MINUS           reduce using rule 36 (value -> id .)
-    MUL             reduce using rule 36 (value -> id .)
-    DIV             reduce using rule 36 (value -> id .)
-    EXPON           reduce using rule 36 (value -> id .)
-    QUOTE           reduce using rule 36 (value -> id .)
-    FACTOR          reduce using rule 36 (value -> id .)
-    SEMICOLON       reduce using rule 36 (value -> id .)
-    NEWLINE         reduce using rule 36 (value -> id .)
-    ID              reduce using rule 36 (value -> id .)
-    PAREN_CLOSE     reduce using rule 36 (value -> id .)
-    OR              reduce using rule 36 (value -> id .)
-    COMMA           reduce using rule 36 (value -> id .)
-    ANGLE_CLOSE     reduce using rule 36 (value -> id .)
+    PLUS            reduce using rule 37 (value -> id .)
+    MINUS           reduce using rule 37 (value -> id .)
+    MUL             reduce using rule 37 (value -> id .)
+    DIV             reduce using rule 37 (value -> id .)
+    EXPON           reduce using rule 37 (value -> id .)
+    QUOTE           reduce using rule 37 (value -> id .)
+    FACTOR          reduce using rule 37 (value -> id .)
+    SEMICOLON       reduce using rule 37 (value -> id .)
+    NEWLINE         reduce using rule 37 (value -> id .)
+    ID              reduce using rule 37 (value -> id .)
+    PAREN_CLOSE     reduce using rule 37 (value -> id .)
+    OR              reduce using rule 37 (value -> id .)
+    COMMA           reduce using rule 37 (value -> id .)
+    ANGLE_CLOSE     reduce using rule 37 (value -> id .)
 
 
 state 45
 
-    (24) assign -> id ASSIGN . expr
+    (25) assign -> id ASSIGN . expr
     (8) expr -> . limit
     (9) expr -> . derivate
     (10) expr -> . factorial
     (11) expr -> . abs
     (18) expr -> . fcall
-    (26) expr -> . expr PLUS expr
-    (27) expr -> . expr MINUS expr
-    (28) expr -> . expr MUL expr
-    (29) expr -> . expr DIV expr
-    (30) expr -> . expr EXPON expr
-    (31) expr -> . value
-    (32) expr -> . expr id
-    (33) expr -> . PAREN_OPEN expr PAREN_CLOSE
+    (27) expr -> . expr PLUS expr
+    (28) expr -> . expr MINUS expr
+    (29) expr -> . expr MUL expr
+    (30) expr -> . expr DIV expr
+    (31) expr -> . expr EXPON expr
+    (32) expr -> . value
+    (33) expr -> . expr id
+    (34) expr -> . PAREN_OPEN expr PAREN_CLOSE
     (16) limit -> . LIM ANGLE_OPEN to ANGLE_CLOSE expr
     (15) derivate -> . expr QUOTE
     (14) factorial -> . expr FACTOR
     (12) abs -> . OR expr OR
     (19) fcall -> . id PAREN_OPEN params PAREN_CLOSE
     (20) fcall -> . id PAREN_OPEN PAREN_CLOSE
-    (34) value -> . MINUS value
-    (35) value -> . STRING
-    (36) value -> . id
-    (37) value -> . bool
-    (41) value -> . number
-    (42) value -> . float
-    (38) id -> . ID
-    (39) bool -> . TRUE
-    (40) bool -> . FALSE
-    (43) number -> . INTEGER
-    (44) float -> . INTEGER DOT INTEGER
+    (35) value -> . MINUS value
+    (36) value -> . STRING
+    (37) value -> . id
+    (38) value -> . bool
+    (42) value -> . number
+    (43) value -> . float
+    (39) id -> . ID
+    (40) bool -> . TRUE
+    (41) bool -> . FALSE
+    (44) number -> . INTEGER
+    (45) float -> . INTEGER DOT INTEGER
 
     PAREN_OPEN      shift and go to state 15
     LIM             shift and go to state 19
@@ -1531,31 +1522,31 @@ state 46
     (10) expr -> . factorial
     (11) expr -> . abs
     (18) expr -> . fcall
-    (26) expr -> . expr PLUS expr
-    (27) expr -> . expr MINUS expr
-    (28) expr -> . expr MUL expr
-    (29) expr -> . expr DIV expr
-    (30) expr -> . expr EXPON expr
-    (31) expr -> . value
-    (32) expr -> . expr id
-    (33) expr -> . PAREN_OPEN expr PAREN_CLOSE
+    (27) expr -> . expr PLUS expr
+    (28) expr -> . expr MINUS expr
+    (29) expr -> . expr MUL expr
+    (30) expr -> . expr DIV expr
+    (31) expr -> . expr EXPON expr
+    (32) expr -> . value
+    (33) expr -> . expr id
+    (34) expr -> . PAREN_OPEN expr PAREN_CLOSE
     (16) limit -> . LIM ANGLE_OPEN to ANGLE_CLOSE expr
     (15) derivate -> . expr QUOTE
     (14) factorial -> . expr FACTOR
     (12) abs -> . OR expr OR
     (19) fcall -> . id PAREN_OPEN params PAREN_CLOSE
     (20) fcall -> . id PAREN_OPEN PAREN_CLOSE
-    (34) value -> . MINUS value
-    (35) value -> . STRING
-    (36) value -> . id
-    (37) value -> . bool
-    (41) value -> . number
-    (42) value -> . float
-    (38) id -> . ID
-    (39) bool -> . TRUE
-    (40) bool -> . FALSE
-    (43) number -> . INTEGER
-    (44) float -> . INTEGER DOT INTEGER
+    (35) value -> . MINUS value
+    (36) value -> . STRING
+    (37) value -> . id
+    (38) value -> . bool
+    (42) value -> . number
+    (43) value -> . float
+    (39) id -> . ID
+    (40) bool -> . TRUE
+    (41) bool -> . FALSE
+    (44) number -> . INTEGER
+    (45) float -> . INTEGER DOT INTEGER
 
     PAREN_CLOSE     shift and go to state 63
     PAREN_OPEN      shift and go to state 15
@@ -1583,16 +1574,16 @@ state 46
 
 state 47
 
-    (33) expr -> PAREN_OPEN expr . PAREN_CLOSE
-    (26) expr -> expr . PLUS expr
-    (27) expr -> expr . MINUS expr
-    (28) expr -> expr . MUL expr
-    (29) expr -> expr . DIV expr
-    (30) expr -> expr . EXPON expr
-    (32) expr -> expr . id
+    (34) expr -> PAREN_OPEN expr . PAREN_CLOSE
+    (27) expr -> expr . PLUS expr
+    (28) expr -> expr . MINUS expr
+    (29) expr -> expr . MUL expr
+    (30) expr -> expr . DIV expr
+    (31) expr -> expr . EXPON expr
+    (33) expr -> expr . id
     (15) derivate -> expr . QUOTE
     (14) factorial -> expr . FACTOR
-    (38) id -> . ID
+    (39) id -> . ID
 
     PAREN_CLOSE     shift and go to state 65
     PLUS            shift and go to state 31
@@ -1630,37 +1621,37 @@ state 49
 
     (19) fcall -> id . PAREN_OPEN params PAREN_CLOSE
     (20) fcall -> id . PAREN_OPEN PAREN_CLOSE
-    (36) value -> id .
+    (37) value -> id .
 
     PAREN_OPEN      shift and go to state 46
-    PAREN_CLOSE     reduce using rule 36 (value -> id .)
-    PLUS            reduce using rule 36 (value -> id .)
-    MINUS           reduce using rule 36 (value -> id .)
-    MUL             reduce using rule 36 (value -> id .)
-    DIV             reduce using rule 36 (value -> id .)
-    EXPON           reduce using rule 36 (value -> id .)
-    QUOTE           reduce using rule 36 (value -> id .)
-    FACTOR          reduce using rule 36 (value -> id .)
-    ID              reduce using rule 36 (value -> id .)
-    SEMICOLON       reduce using rule 36 (value -> id .)
-    NEWLINE         reduce using rule 36 (value -> id .)
-    OR              reduce using rule 36 (value -> id .)
-    COMMA           reduce using rule 36 (value -> id .)
-    ANGLE_CLOSE     reduce using rule 36 (value -> id .)
+    PAREN_CLOSE     reduce using rule 37 (value -> id .)
+    PLUS            reduce using rule 37 (value -> id .)
+    MINUS           reduce using rule 37 (value -> id .)
+    MUL             reduce using rule 37 (value -> id .)
+    DIV             reduce using rule 37 (value -> id .)
+    EXPON           reduce using rule 37 (value -> id .)
+    QUOTE           reduce using rule 37 (value -> id .)
+    FACTOR          reduce using rule 37 (value -> id .)
+    ID              reduce using rule 37 (value -> id .)
+    SEMICOLON       reduce using rule 37 (value -> id .)
+    NEWLINE         reduce using rule 37 (value -> id .)
+    OR              reduce using rule 37 (value -> id .)
+    COMMA           reduce using rule 37 (value -> id .)
+    ANGLE_CLOSE     reduce using rule 37 (value -> id .)
 
 
 state 50
 
     (13) return -> RETURN expr .
-    (26) expr -> expr . PLUS expr
-    (27) expr -> expr . MINUS expr
-    (28) expr -> expr . MUL expr
-    (29) expr -> expr . DIV expr
-    (30) expr -> expr . EXPON expr
-    (32) expr -> expr . id
+    (27) expr -> expr . PLUS expr
+    (28) expr -> expr . MINUS expr
+    (29) expr -> expr . MUL expr
+    (30) expr -> expr . DIV expr
+    (31) expr -> expr . EXPON expr
+    (33) expr -> expr . id
     (15) derivate -> expr . QUOTE
     (14) factorial -> expr . FACTOR
-    (38) id -> . ID
+    (39) id -> . ID
 
     SEMICOLON       reduce using rule 13 (return -> RETURN expr .)
     NEWLINE         reduce using rule 13 (return -> RETURN expr .)
@@ -1679,7 +1670,7 @@ state 51
 
     (16) limit -> LIM ANGLE_OPEN . to ANGLE_CLOSE expr
     (17) to -> . id ARROW_RIGHT expr
-    (38) id -> . ID
+    (39) id -> . ID
 
     ID              shift and go to state 25
 
@@ -1689,15 +1680,15 @@ state 51
 state 52
 
     (12) abs -> OR expr . OR
-    (26) expr -> expr . PLUS expr
-    (27) expr -> expr . MINUS expr
-    (28) expr -> expr . MUL expr
-    (29) expr -> expr . DIV expr
-    (30) expr -> expr . EXPON expr
-    (32) expr -> expr . id
+    (27) expr -> expr . PLUS expr
+    (28) expr -> expr . MINUS expr
+    (29) expr -> expr . MUL expr
+    (30) expr -> expr . DIV expr
+    (31) expr -> expr . EXPON expr
+    (33) expr -> expr . id
     (15) derivate -> expr . QUOTE
     (14) factorial -> expr . FACTOR
-    (38) id -> . ID
+    (39) id -> . ID
 
     OR              shift and go to state 68
     PLUS            shift and go to state 31
@@ -1713,44 +1704,44 @@ state 52
 
 state 53
 
-    (44) float -> INTEGER DOT . INTEGER
+    (45) float -> INTEGER DOT . INTEGER
 
     INTEGER         shift and go to state 69
 
 
 state 54
 
-    (26) expr -> expr PLUS expr .
-    (26) expr -> expr . PLUS expr
-    (27) expr -> expr . MINUS expr
-    (28) expr -> expr . MUL expr
-    (29) expr -> expr . DIV expr
-    (30) expr -> expr . EXPON expr
-    (32) expr -> expr . id
+    (27) expr -> expr PLUS expr .
+    (27) expr -> expr . PLUS expr
+    (28) expr -> expr . MINUS expr
+    (29) expr -> expr . MUL expr
+    (30) expr -> expr . DIV expr
+    (31) expr -> expr . EXPON expr
+    (33) expr -> expr . id
     (15) derivate -> expr . QUOTE
     (14) factorial -> expr . FACTOR
-    (38) id -> . ID
+    (39) id -> . ID
 
-    PLUS            reduce using rule 26 (expr -> expr PLUS expr .)
-    QUOTE           reduce using rule 26 (expr -> expr PLUS expr .)
-    SEMICOLON       reduce using rule 26 (expr -> expr PLUS expr .)
-    NEWLINE         reduce using rule 26 (expr -> expr PLUS expr .)
-    ID              reduce using rule 26 (expr -> expr PLUS expr .)
-    PAREN_CLOSE     reduce using rule 26 (expr -> expr PLUS expr .)
-    OR              reduce using rule 26 (expr -> expr PLUS expr .)
-    COMMA           reduce using rule 26 (expr -> expr PLUS expr .)
-    ANGLE_CLOSE     reduce using rule 26 (expr -> expr PLUS expr .)
+    PLUS            reduce using rule 27 (expr -> expr PLUS expr .)
+    QUOTE           reduce using rule 27 (expr -> expr PLUS expr .)
+    SEMICOLON       reduce using rule 27 (expr -> expr PLUS expr .)
+    NEWLINE         reduce using rule 27 (expr -> expr PLUS expr .)
+    ID              reduce using rule 27 (expr -> expr PLUS expr .)
+    PAREN_CLOSE     reduce using rule 27 (expr -> expr PLUS expr .)
+    OR              reduce using rule 27 (expr -> expr PLUS expr .)
+    COMMA           reduce using rule 27 (expr -> expr PLUS expr .)
+    ANGLE_CLOSE     reduce using rule 27 (expr -> expr PLUS expr .)
     MINUS           shift and go to state 32
     MUL             shift and go to state 33
     DIV             shift and go to state 34
     EXPON           shift and go to state 35
     FACTOR          shift and go to state 38
 
-  ! MINUS           [ reduce using rule 26 (expr -> expr PLUS expr .) ]
-  ! MUL             [ reduce using rule 26 (expr -> expr PLUS expr .) ]
-  ! DIV             [ reduce using rule 26 (expr -> expr PLUS expr .) ]
-  ! EXPON           [ reduce using rule 26 (expr -> expr PLUS expr .) ]
-  ! FACTOR          [ reduce using rule 26 (expr -> expr PLUS expr .) ]
+  ! MINUS           [ reduce using rule 27 (expr -> expr PLUS expr .) ]
+  ! MUL             [ reduce using rule 27 (expr -> expr PLUS expr .) ]
+  ! DIV             [ reduce using rule 27 (expr -> expr PLUS expr .) ]
+  ! EXPON           [ reduce using rule 27 (expr -> expr PLUS expr .) ]
+  ! FACTOR          [ reduce using rule 27 (expr -> expr PLUS expr .) ]
   ! PLUS            [ shift and go to state 31 ]
   ! QUOTE           [ shift and go to state 37 ]
   ! ID              [ shift and go to state 25 ]
@@ -1759,36 +1750,36 @@ state 54
 
 state 55
 
-    (27) expr -> expr MINUS expr .
-    (26) expr -> expr . PLUS expr
-    (27) expr -> expr . MINUS expr
-    (28) expr -> expr . MUL expr
-    (29) expr -> expr . DIV expr
-    (30) expr -> expr . EXPON expr
-    (32) expr -> expr . id
+    (28) expr -> expr MINUS expr .
+    (27) expr -> expr . PLUS expr
+    (28) expr -> expr . MINUS expr
+    (29) expr -> expr . MUL expr
+    (30) expr -> expr . DIV expr
+    (31) expr -> expr . EXPON expr
+    (33) expr -> expr . id
     (15) derivate -> expr . QUOTE
     (14) factorial -> expr . FACTOR
-    (38) id -> . ID
+    (39) id -> . ID
 
-    PLUS            reduce using rule 27 (expr -> expr MINUS expr .)
-    MINUS           reduce using rule 27 (expr -> expr MINUS expr .)
-    QUOTE           reduce using rule 27 (expr -> expr MINUS expr .)
-    SEMICOLON       reduce using rule 27 (expr -> expr MINUS expr .)
-    NEWLINE         reduce using rule 27 (expr -> expr MINUS expr .)
-    ID              reduce using rule 27 (expr -> expr MINUS expr .)
-    PAREN_CLOSE     reduce using rule 27 (expr -> expr MINUS expr .)
-    OR              reduce using rule 27 (expr -> expr MINUS expr .)
-    COMMA           reduce using rule 27 (expr -> expr MINUS expr .)
-    ANGLE_CLOSE     reduce using rule 27 (expr -> expr MINUS expr .)
+    PLUS            reduce using rule 28 (expr -> expr MINUS expr .)
+    MINUS           reduce using rule 28 (expr -> expr MINUS expr .)
+    QUOTE           reduce using rule 28 (expr -> expr MINUS expr .)
+    SEMICOLON       reduce using rule 28 (expr -> expr MINUS expr .)
+    NEWLINE         reduce using rule 28 (expr -> expr MINUS expr .)
+    ID              reduce using rule 28 (expr -> expr MINUS expr .)
+    PAREN_CLOSE     reduce using rule 28 (expr -> expr MINUS expr .)
+    OR              reduce using rule 28 (expr -> expr MINUS expr .)
+    COMMA           reduce using rule 28 (expr -> expr MINUS expr .)
+    ANGLE_CLOSE     reduce using rule 28 (expr -> expr MINUS expr .)
     MUL             shift and go to state 33
     DIV             shift and go to state 34
     EXPON           shift and go to state 35
     FACTOR          shift and go to state 38
 
-  ! MUL             [ reduce using rule 27 (expr -> expr MINUS expr .) ]
-  ! DIV             [ reduce using rule 27 (expr -> expr MINUS expr .) ]
-  ! EXPON           [ reduce using rule 27 (expr -> expr MINUS expr .) ]
-  ! FACTOR          [ reduce using rule 27 (expr -> expr MINUS expr .) ]
+  ! MUL             [ reduce using rule 28 (expr -> expr MINUS expr .) ]
+  ! DIV             [ reduce using rule 28 (expr -> expr MINUS expr .) ]
+  ! EXPON           [ reduce using rule 28 (expr -> expr MINUS expr .) ]
+  ! FACTOR          [ reduce using rule 28 (expr -> expr MINUS expr .) ]
   ! PLUS            [ shift and go to state 31 ]
   ! MINUS           [ shift and go to state 32 ]
   ! QUOTE           [ shift and go to state 37 ]
@@ -1798,35 +1789,35 @@ state 55
 
 state 56
 
-    (28) expr -> expr MUL expr .
-    (26) expr -> expr . PLUS expr
-    (27) expr -> expr . MINUS expr
-    (28) expr -> expr . MUL expr
-    (29) expr -> expr . DIV expr
-    (30) expr -> expr . EXPON expr
-    (32) expr -> expr . id
+    (29) expr -> expr MUL expr .
+    (27) expr -> expr . PLUS expr
+    (28) expr -> expr . MINUS expr
+    (29) expr -> expr . MUL expr
+    (30) expr -> expr . DIV expr
+    (31) expr -> expr . EXPON expr
+    (33) expr -> expr . id
     (15) derivate -> expr . QUOTE
     (14) factorial -> expr . FACTOR
-    (38) id -> . ID
+    (39) id -> . ID
 
-    PLUS            reduce using rule 28 (expr -> expr MUL expr .)
-    MINUS           reduce using rule 28 (expr -> expr MUL expr .)
-    MUL             reduce using rule 28 (expr -> expr MUL expr .)
-    QUOTE           reduce using rule 28 (expr -> expr MUL expr .)
-    SEMICOLON       reduce using rule 28 (expr -> expr MUL expr .)
-    NEWLINE         reduce using rule 28 (expr -> expr MUL expr .)
-    ID              reduce using rule 28 (expr -> expr MUL expr .)
-    PAREN_CLOSE     reduce using rule 28 (expr -> expr MUL expr .)
-    OR              reduce using rule 28 (expr -> expr MUL expr .)
-    COMMA           reduce using rule 28 (expr -> expr MUL expr .)
-    ANGLE_CLOSE     reduce using rule 28 (expr -> expr MUL expr .)
+    PLUS            reduce using rule 29 (expr -> expr MUL expr .)
+    MINUS           reduce using rule 29 (expr -> expr MUL expr .)
+    MUL             reduce using rule 29 (expr -> expr MUL expr .)
+    QUOTE           reduce using rule 29 (expr -> expr MUL expr .)
+    SEMICOLON       reduce using rule 29 (expr -> expr MUL expr .)
+    NEWLINE         reduce using rule 29 (expr -> expr MUL expr .)
+    ID              reduce using rule 29 (expr -> expr MUL expr .)
+    PAREN_CLOSE     reduce using rule 29 (expr -> expr MUL expr .)
+    OR              reduce using rule 29 (expr -> expr MUL expr .)
+    COMMA           reduce using rule 29 (expr -> expr MUL expr .)
+    ANGLE_CLOSE     reduce using rule 29 (expr -> expr MUL expr .)
     DIV             shift and go to state 34
     EXPON           shift and go to state 35
     FACTOR          shift and go to state 38
 
-  ! DIV             [ reduce using rule 28 (expr -> expr MUL expr .) ]
-  ! EXPON           [ reduce using rule 28 (expr -> expr MUL expr .) ]
-  ! FACTOR          [ reduce using rule 28 (expr -> expr MUL expr .) ]
+  ! DIV             [ reduce using rule 29 (expr -> expr MUL expr .) ]
+  ! EXPON           [ reduce using rule 29 (expr -> expr MUL expr .) ]
+  ! FACTOR          [ reduce using rule 29 (expr -> expr MUL expr .) ]
   ! PLUS            [ shift and go to state 31 ]
   ! MINUS           [ shift and go to state 32 ]
   ! MUL             [ shift and go to state 33 ]
@@ -1837,34 +1828,34 @@ state 56
 
 state 57
 
-    (29) expr -> expr DIV expr .
-    (26) expr -> expr . PLUS expr
-    (27) expr -> expr . MINUS expr
-    (28) expr -> expr . MUL expr
-    (29) expr -> expr . DIV expr
-    (30) expr -> expr . EXPON expr
-    (32) expr -> expr . id
+    (30) expr -> expr DIV expr .
+    (27) expr -> expr . PLUS expr
+    (28) expr -> expr . MINUS expr
+    (29) expr -> expr . MUL expr
+    (30) expr -> expr . DIV expr
+    (31) expr -> expr . EXPON expr
+    (33) expr -> expr . id
     (15) derivate -> expr . QUOTE
     (14) factorial -> expr . FACTOR
-    (38) id -> . ID
+    (39) id -> . ID
 
-    PLUS            reduce using rule 29 (expr -> expr DIV expr .)
-    MINUS           reduce using rule 29 (expr -> expr DIV expr .)
-    MUL             reduce using rule 29 (expr -> expr DIV expr .)
-    DIV             reduce using rule 29 (expr -> expr DIV expr .)
-    QUOTE           reduce using rule 29 (expr -> expr DIV expr .)
-    SEMICOLON       reduce using rule 29 (expr -> expr DIV expr .)
-    NEWLINE         reduce using rule 29 (expr -> expr DIV expr .)
-    ID              reduce using rule 29 (expr -> expr DIV expr .)
-    PAREN_CLOSE     reduce using rule 29 (expr -> expr DIV expr .)
-    OR              reduce using rule 29 (expr -> expr DIV expr .)
-    COMMA           reduce using rule 29 (expr -> expr DIV expr .)
-    ANGLE_CLOSE     reduce using rule 29 (expr -> expr DIV expr .)
+    PLUS            reduce using rule 30 (expr -> expr DIV expr .)
+    MINUS           reduce using rule 30 (expr -> expr DIV expr .)
+    MUL             reduce using rule 30 (expr -> expr DIV expr .)
+    DIV             reduce using rule 30 (expr -> expr DIV expr .)
+    QUOTE           reduce using rule 30 (expr -> expr DIV expr .)
+    SEMICOLON       reduce using rule 30 (expr -> expr DIV expr .)
+    NEWLINE         reduce using rule 30 (expr -> expr DIV expr .)
+    ID              reduce using rule 30 (expr -> expr DIV expr .)
+    PAREN_CLOSE     reduce using rule 30 (expr -> expr DIV expr .)
+    OR              reduce using rule 30 (expr -> expr DIV expr .)
+    COMMA           reduce using rule 30 (expr -> expr DIV expr .)
+    ANGLE_CLOSE     reduce using rule 30 (expr -> expr DIV expr .)
     EXPON           shift and go to state 35
     FACTOR          shift and go to state 38
 
-  ! EXPON           [ reduce using rule 29 (expr -> expr DIV expr .) ]
-  ! FACTOR          [ reduce using rule 29 (expr -> expr DIV expr .) ]
+  ! EXPON           [ reduce using rule 30 (expr -> expr DIV expr .) ]
+  ! FACTOR          [ reduce using rule 30 (expr -> expr DIV expr .) ]
   ! PLUS            [ shift and go to state 31 ]
   ! MINUS           [ shift and go to state 32 ]
   ! MUL             [ shift and go to state 33 ]
@@ -1876,33 +1867,33 @@ state 57
 
 state 58
 
-    (30) expr -> expr EXPON expr .
-    (26) expr -> expr . PLUS expr
-    (27) expr -> expr . MINUS expr
-    (28) expr -> expr . MUL expr
-    (29) expr -> expr . DIV expr
-    (30) expr -> expr . EXPON expr
-    (32) expr -> expr . id
+    (31) expr -> expr EXPON expr .
+    (27) expr -> expr . PLUS expr
+    (28) expr -> expr . MINUS expr
+    (29) expr -> expr . MUL expr
+    (30) expr -> expr . DIV expr
+    (31) expr -> expr . EXPON expr
+    (33) expr -> expr . id
     (15) derivate -> expr . QUOTE
     (14) factorial -> expr . FACTOR
-    (38) id -> . ID
+    (39) id -> . ID
 
-    PLUS            reduce using rule 30 (expr -> expr EXPON expr .)
-    MINUS           reduce using rule 30 (expr -> expr EXPON expr .)
-    MUL             reduce using rule 30 (expr -> expr EXPON expr .)
-    DIV             reduce using rule 30 (expr -> expr EXPON expr .)
-    EXPON           reduce using rule 30 (expr -> expr EXPON expr .)
-    QUOTE           reduce using rule 30 (expr -> expr EXPON expr .)
-    SEMICOLON       reduce using rule 30 (expr -> expr EXPON expr .)
-    NEWLINE         reduce using rule 30 (expr -> expr EXPON expr .)
-    ID              reduce using rule 30 (expr -> expr EXPON expr .)
-    PAREN_CLOSE     reduce using rule 30 (expr -> expr EXPON expr .)
-    OR              reduce using rule 30 (expr -> expr EXPON expr .)
-    COMMA           reduce using rule 30 (expr -> expr EXPON expr .)
-    ANGLE_CLOSE     reduce using rule 30 (expr -> expr EXPON expr .)
+    PLUS            reduce using rule 31 (expr -> expr EXPON expr .)
+    MINUS           reduce using rule 31 (expr -> expr EXPON expr .)
+    MUL             reduce using rule 31 (expr -> expr EXPON expr .)
+    DIV             reduce using rule 31 (expr -> expr EXPON expr .)
+    EXPON           reduce using rule 31 (expr -> expr EXPON expr .)
+    QUOTE           reduce using rule 31 (expr -> expr EXPON expr .)
+    SEMICOLON       reduce using rule 31 (expr -> expr EXPON expr .)
+    NEWLINE         reduce using rule 31 (expr -> expr EXPON expr .)
+    ID              reduce using rule 31 (expr -> expr EXPON expr .)
+    PAREN_CLOSE     reduce using rule 31 (expr -> expr EXPON expr .)
+    OR              reduce using rule 31 (expr -> expr EXPON expr .)
+    COMMA           reduce using rule 31 (expr -> expr EXPON expr .)
+    ANGLE_CLOSE     reduce using rule 31 (expr -> expr EXPON expr .)
     FACTOR          shift and go to state 38
 
-  ! FACTOR          [ reduce using rule 30 (expr -> expr EXPON expr .) ]
+  ! FACTOR          [ reduce using rule 31 (expr -> expr EXPON expr .) ]
   ! PLUS            [ shift and go to state 31 ]
   ! MINUS           [ shift and go to state 32 ]
   ! MUL             [ shift and go to state 33 ]
@@ -1915,7 +1906,8 @@ state 58
 
 state 59
 
-    (23) assign -> fcall ASSIGN CURLY_OPEN . program CURLY_CLOSE
+    (23) assign -> fcall ASSIGN CURLY_OPEN . CURLY_CLOSE
+    (24) assign -> fcall ASSIGN CURLY_OPEN . program CURLY_CLOSE
     (1) program -> . operation
     (2) program -> . program operation
     (3) operation -> . expr end
@@ -1928,38 +1920,40 @@ state 59
     (10) expr -> . factorial
     (11) expr -> . abs
     (18) expr -> . fcall
-    (26) expr -> . expr PLUS expr
-    (27) expr -> . expr MINUS expr
-    (28) expr -> . expr MUL expr
-    (29) expr -> . expr DIV expr
-    (30) expr -> . expr EXPON expr
-    (31) expr -> . value
-    (32) expr -> . expr id
-    (33) expr -> . PAREN_OPEN expr PAREN_CLOSE
-    (23) assign -> . fcall ASSIGN CURLY_OPEN program CURLY_CLOSE
-    (24) assign -> . id ASSIGN expr
-    (25) assign -> . fcall ASSIGN expr
+    (27) expr -> . expr PLUS expr
+    (28) expr -> . expr MINUS expr
+    (29) expr -> . expr MUL expr
+    (30) expr -> . expr DIV expr
+    (31) expr -> . expr EXPON expr
+    (32) expr -> . value
+    (33) expr -> . expr id
+    (34) expr -> . PAREN_OPEN expr PAREN_CLOSE
+    (23) assign -> . fcall ASSIGN CURLY_OPEN CURLY_CLOSE
+    (24) assign -> . fcall ASSIGN CURLY_OPEN program CURLY_CLOSE
+    (25) assign -> . id ASSIGN expr
+    (26) assign -> . fcall ASSIGN expr
     (19) fcall -> . id PAREN_OPEN params PAREN_CLOSE
     (20) fcall -> . id PAREN_OPEN PAREN_CLOSE
     (13) return -> . RETURN expr
-    (45) end -> . SEMICOLON
-    (46) end -> . NEWLINE
+    (46) end -> . SEMICOLON
+    (47) end -> . NEWLINE
     (16) limit -> . LIM ANGLE_OPEN to ANGLE_CLOSE expr
     (15) derivate -> . expr QUOTE
     (14) factorial -> . expr FACTOR
     (12) abs -> . OR expr OR
-    (34) value -> . MINUS value
-    (35) value -> . STRING
-    (36) value -> . id
-    (37) value -> . bool
-    (41) value -> . number
-    (42) value -> . float
-    (38) id -> . ID
-    (39) bool -> . TRUE
-    (40) bool -> . FALSE
-    (43) number -> . INTEGER
-    (44) float -> . INTEGER DOT INTEGER
+    (35) value -> . MINUS value
+    (36) value -> . STRING
+    (37) value -> . id
+    (38) value -> . bool
+    (42) value -> . number
+    (43) value -> . float
+    (39) id -> . ID
+    (40) bool -> . TRUE
+    (41) bool -> . FALSE
+    (44) number -> . INTEGER
+    (45) float -> . INTEGER DOT INTEGER
 
+    CURLY_CLOSE     shift and go to state 70
     PAREN_OPEN      shift and go to state 15
     RETURN          shift and go to state 16
     SEMICOLON       shift and go to state 17
@@ -1974,7 +1968,7 @@ state 59
     INTEGER         shift and go to state 28
 
     fcall                          shift and go to state 6
-    program                        shift and go to state 70
+    program                        shift and go to state 71
     operation                      shift and go to state 2
     expr                           shift and go to state 3
     end                            shift and go to state 4
@@ -1992,19 +1986,19 @@ state 59
 
 state 60
 
-    (25) assign -> fcall ASSIGN expr .
-    (26) expr -> expr . PLUS expr
-    (27) expr -> expr . MINUS expr
-    (28) expr -> expr . MUL expr
-    (29) expr -> expr . DIV expr
-    (30) expr -> expr . EXPON expr
-    (32) expr -> expr . id
+    (26) assign -> fcall ASSIGN expr .
+    (27) expr -> expr . PLUS expr
+    (28) expr -> expr . MINUS expr
+    (29) expr -> expr . MUL expr
+    (30) expr -> expr . DIV expr
+    (31) expr -> expr . EXPON expr
+    (33) expr -> expr . id
     (15) derivate -> expr . QUOTE
     (14) factorial -> expr . FACTOR
-    (38) id -> . ID
+    (39) id -> . ID
 
-    SEMICOLON       reduce using rule 25 (assign -> fcall ASSIGN expr .)
-    NEWLINE         reduce using rule 25 (assign -> fcall ASSIGN expr .)
+    SEMICOLON       reduce using rule 26 (assign -> fcall ASSIGN expr .)
+    NEWLINE         reduce using rule 26 (assign -> fcall ASSIGN expr .)
     PLUS            shift and go to state 31
     MINUS           shift and go to state 32
     MUL             shift and go to state 33
@@ -2018,19 +2012,19 @@ state 60
 
 state 61
 
-    (24) assign -> id ASSIGN expr .
-    (26) expr -> expr . PLUS expr
-    (27) expr -> expr . MINUS expr
-    (28) expr -> expr . MUL expr
-    (29) expr -> expr . DIV expr
-    (30) expr -> expr . EXPON expr
-    (32) expr -> expr . id
+    (25) assign -> id ASSIGN expr .
+    (27) expr -> expr . PLUS expr
+    (28) expr -> expr . MINUS expr
+    (29) expr -> expr . MUL expr
+    (30) expr -> expr . DIV expr
+    (31) expr -> expr . EXPON expr
+    (33) expr -> expr . id
     (15) derivate -> expr . QUOTE
     (14) factorial -> expr . FACTOR
-    (38) id -> . ID
+    (39) id -> . ID
 
-    SEMICOLON       reduce using rule 24 (assign -> id ASSIGN expr .)
-    NEWLINE         reduce using rule 24 (assign -> id ASSIGN expr .)
+    SEMICOLON       reduce using rule 25 (assign -> id ASSIGN expr .)
+    NEWLINE         reduce using rule 25 (assign -> id ASSIGN expr .)
     PLUS            shift and go to state 31
     MINUS           shift and go to state 32
     MUL             shift and go to state 33
@@ -2047,8 +2041,8 @@ state 62
     (19) fcall -> id PAREN_OPEN params . PAREN_CLOSE
     (22) params -> params . COMMA expr
 
-    PAREN_CLOSE     shift and go to state 71
-    COMMA           shift and go to state 72
+    PAREN_CLOSE     shift and go to state 72
+    COMMA           shift and go to state 73
 
 
 state 63
@@ -2075,15 +2069,15 @@ state 63
 state 64
 
     (21) params -> expr .
-    (26) expr -> expr . PLUS expr
-    (27) expr -> expr . MINUS expr
-    (28) expr -> expr . MUL expr
-    (29) expr -> expr . DIV expr
-    (30) expr -> expr . EXPON expr
-    (32) expr -> expr . id
+    (27) expr -> expr . PLUS expr
+    (28) expr -> expr . MINUS expr
+    (29) expr -> expr . MUL expr
+    (30) expr -> expr . DIV expr
+    (31) expr -> expr . EXPON expr
+    (33) expr -> expr . id
     (15) derivate -> expr . QUOTE
     (14) factorial -> expr . FACTOR
-    (38) id -> . ID
+    (39) id -> . ID
 
     PAREN_CLOSE     reduce using rule 21 (params -> expr .)
     COMMA           reduce using rule 21 (params -> expr .)
@@ -2100,36 +2094,36 @@ state 64
 
 state 65
 
-    (33) expr -> PAREN_OPEN expr PAREN_CLOSE .
+    (34) expr -> PAREN_OPEN expr PAREN_CLOSE .
 
-    PLUS            reduce using rule 33 (expr -> PAREN_OPEN expr PAREN_CLOSE .)
-    MINUS           reduce using rule 33 (expr -> PAREN_OPEN expr PAREN_CLOSE .)
-    MUL             reduce using rule 33 (expr -> PAREN_OPEN expr PAREN_CLOSE .)
-    DIV             reduce using rule 33 (expr -> PAREN_OPEN expr PAREN_CLOSE .)
-    EXPON           reduce using rule 33 (expr -> PAREN_OPEN expr PAREN_CLOSE .)
-    QUOTE           reduce using rule 33 (expr -> PAREN_OPEN expr PAREN_CLOSE .)
-    FACTOR          reduce using rule 33 (expr -> PAREN_OPEN expr PAREN_CLOSE .)
-    SEMICOLON       reduce using rule 33 (expr -> PAREN_OPEN expr PAREN_CLOSE .)
-    NEWLINE         reduce using rule 33 (expr -> PAREN_OPEN expr PAREN_CLOSE .)
-    ID              reduce using rule 33 (expr -> PAREN_OPEN expr PAREN_CLOSE .)
-    PAREN_CLOSE     reduce using rule 33 (expr -> PAREN_OPEN expr PAREN_CLOSE .)
-    OR              reduce using rule 33 (expr -> PAREN_OPEN expr PAREN_CLOSE .)
-    COMMA           reduce using rule 33 (expr -> PAREN_OPEN expr PAREN_CLOSE .)
-    ANGLE_CLOSE     reduce using rule 33 (expr -> PAREN_OPEN expr PAREN_CLOSE .)
+    PLUS            reduce using rule 34 (expr -> PAREN_OPEN expr PAREN_CLOSE .)
+    MINUS           reduce using rule 34 (expr -> PAREN_OPEN expr PAREN_CLOSE .)
+    MUL             reduce using rule 34 (expr -> PAREN_OPEN expr PAREN_CLOSE .)
+    DIV             reduce using rule 34 (expr -> PAREN_OPEN expr PAREN_CLOSE .)
+    EXPON           reduce using rule 34 (expr -> PAREN_OPEN expr PAREN_CLOSE .)
+    QUOTE           reduce using rule 34 (expr -> PAREN_OPEN expr PAREN_CLOSE .)
+    FACTOR          reduce using rule 34 (expr -> PAREN_OPEN expr PAREN_CLOSE .)
+    SEMICOLON       reduce using rule 34 (expr -> PAREN_OPEN expr PAREN_CLOSE .)
+    NEWLINE         reduce using rule 34 (expr -> PAREN_OPEN expr PAREN_CLOSE .)
+    ID              reduce using rule 34 (expr -> PAREN_OPEN expr PAREN_CLOSE .)
+    PAREN_CLOSE     reduce using rule 34 (expr -> PAREN_OPEN expr PAREN_CLOSE .)
+    OR              reduce using rule 34 (expr -> PAREN_OPEN expr PAREN_CLOSE .)
+    COMMA           reduce using rule 34 (expr -> PAREN_OPEN expr PAREN_CLOSE .)
+    ANGLE_CLOSE     reduce using rule 34 (expr -> PAREN_OPEN expr PAREN_CLOSE .)
 
 
 state 66
 
     (16) limit -> LIM ANGLE_OPEN to . ANGLE_CLOSE expr
 
-    ANGLE_CLOSE     shift and go to state 73
+    ANGLE_CLOSE     shift and go to state 74
 
 
 state 67
 
     (17) to -> id . ARROW_RIGHT expr
 
-    ARROW_RIGHT     shift and go to state 74
+    ARROW_RIGHT     shift and go to state 75
 
 
 state 68
@@ -2154,27 +2148,35 @@ state 68
 
 state 69
 
-    (44) float -> INTEGER DOT INTEGER .
+    (45) float -> INTEGER DOT INTEGER .
 
-    PLUS            reduce using rule 44 (float -> INTEGER DOT INTEGER .)
-    MINUS           reduce using rule 44 (float -> INTEGER DOT INTEGER .)
-    MUL             reduce using rule 44 (float -> INTEGER DOT INTEGER .)
-    DIV             reduce using rule 44 (float -> INTEGER DOT INTEGER .)
-    EXPON           reduce using rule 44 (float -> INTEGER DOT INTEGER .)
-    QUOTE           reduce using rule 44 (float -> INTEGER DOT INTEGER .)
-    FACTOR          reduce using rule 44 (float -> INTEGER DOT INTEGER .)
-    SEMICOLON       reduce using rule 44 (float -> INTEGER DOT INTEGER .)
-    NEWLINE         reduce using rule 44 (float -> INTEGER DOT INTEGER .)
-    ID              reduce using rule 44 (float -> INTEGER DOT INTEGER .)
-    PAREN_CLOSE     reduce using rule 44 (float -> INTEGER DOT INTEGER .)
-    OR              reduce using rule 44 (float -> INTEGER DOT INTEGER .)
-    COMMA           reduce using rule 44 (float -> INTEGER DOT INTEGER .)
-    ANGLE_CLOSE     reduce using rule 44 (float -> INTEGER DOT INTEGER .)
+    PLUS            reduce using rule 45 (float -> INTEGER DOT INTEGER .)
+    MINUS           reduce using rule 45 (float -> INTEGER DOT INTEGER .)
+    MUL             reduce using rule 45 (float -> INTEGER DOT INTEGER .)
+    DIV             reduce using rule 45 (float -> INTEGER DOT INTEGER .)
+    EXPON           reduce using rule 45 (float -> INTEGER DOT INTEGER .)
+    QUOTE           reduce using rule 45 (float -> INTEGER DOT INTEGER .)
+    FACTOR          reduce using rule 45 (float -> INTEGER DOT INTEGER .)
+    SEMICOLON       reduce using rule 45 (float -> INTEGER DOT INTEGER .)
+    NEWLINE         reduce using rule 45 (float -> INTEGER DOT INTEGER .)
+    ID              reduce using rule 45 (float -> INTEGER DOT INTEGER .)
+    PAREN_CLOSE     reduce using rule 45 (float -> INTEGER DOT INTEGER .)
+    OR              reduce using rule 45 (float -> INTEGER DOT INTEGER .)
+    COMMA           reduce using rule 45 (float -> INTEGER DOT INTEGER .)
+    ANGLE_CLOSE     reduce using rule 45 (float -> INTEGER DOT INTEGER .)
 
 
 state 70
 
-    (23) assign -> fcall ASSIGN CURLY_OPEN program . CURLY_CLOSE
+    (23) assign -> fcall ASSIGN CURLY_OPEN CURLY_CLOSE .
+
+    SEMICOLON       reduce using rule 23 (assign -> fcall ASSIGN CURLY_OPEN CURLY_CLOSE .)
+    NEWLINE         reduce using rule 23 (assign -> fcall ASSIGN CURLY_OPEN CURLY_CLOSE .)
+
+
+state 71
+
+    (24) assign -> fcall ASSIGN CURLY_OPEN program . CURLY_CLOSE
     (2) program -> program . operation
     (3) operation -> . expr end
     (4) operation -> . assign end
@@ -2186,39 +2188,40 @@ state 70
     (10) expr -> . factorial
     (11) expr -> . abs
     (18) expr -> . fcall
-    (26) expr -> . expr PLUS expr
-    (27) expr -> . expr MINUS expr
-    (28) expr -> . expr MUL expr
-    (29) expr -> . expr DIV expr
-    (30) expr -> . expr EXPON expr
-    (31) expr -> . value
-    (32) expr -> . expr id
-    (33) expr -> . PAREN_OPEN expr PAREN_CLOSE
-    (23) assign -> . fcall ASSIGN CURLY_OPEN program CURLY_CLOSE
-    (24) assign -> . id ASSIGN expr
-    (25) assign -> . fcall ASSIGN expr
+    (27) expr -> . expr PLUS expr
+    (28) expr -> . expr MINUS expr
+    (29) expr -> . expr MUL expr
+    (30) expr -> . expr DIV expr
+    (31) expr -> . expr EXPON expr
+    (32) expr -> . value
+    (33) expr -> . expr id
+    (34) expr -> . PAREN_OPEN expr PAREN_CLOSE
+    (23) assign -> . fcall ASSIGN CURLY_OPEN CURLY_CLOSE
+    (24) assign -> . fcall ASSIGN CURLY_OPEN program CURLY_CLOSE
+    (25) assign -> . id ASSIGN expr
+    (26) assign -> . fcall ASSIGN expr
     (19) fcall -> . id PAREN_OPEN params PAREN_CLOSE
     (20) fcall -> . id PAREN_OPEN PAREN_CLOSE
     (13) return -> . RETURN expr
-    (45) end -> . SEMICOLON
-    (46) end -> . NEWLINE
+    (46) end -> . SEMICOLON
+    (47) end -> . NEWLINE
     (16) limit -> . LIM ANGLE_OPEN to ANGLE_CLOSE expr
     (15) derivate -> . expr QUOTE
     (14) factorial -> . expr FACTOR
     (12) abs -> . OR expr OR
-    (34) value -> . MINUS value
-    (35) value -> . STRING
-    (36) value -> . id
-    (37) value -> . bool
-    (41) value -> . number
-    (42) value -> . float
-    (38) id -> . ID
-    (39) bool -> . TRUE
-    (40) bool -> . FALSE
-    (43) number -> . INTEGER
-    (44) float -> . INTEGER DOT INTEGER
+    (35) value -> . MINUS value
+    (36) value -> . STRING
+    (37) value -> . id
+    (38) value -> . bool
+    (42) value -> . number
+    (43) value -> . float
+    (39) id -> . ID
+    (40) bool -> . TRUE
+    (41) bool -> . FALSE
+    (44) number -> . INTEGER
+    (45) float -> . INTEGER DOT INTEGER
 
-    CURLY_CLOSE     shift and go to state 75
+    CURLY_CLOSE     shift and go to state 76
     PAREN_OPEN      shift and go to state 15
     RETURN          shift and go to state 16
     SEMICOLON       shift and go to state 17
@@ -2248,7 +2251,7 @@ state 70
     number                         shift and go to state 23
     float                          shift and go to state 24
 
-state 71
+state 72
 
     (19) fcall -> id PAREN_OPEN params PAREN_CLOSE .
 
@@ -2269,7 +2272,7 @@ state 71
     ANGLE_CLOSE     reduce using rule 19 (fcall -> id PAREN_OPEN params PAREN_CLOSE .)
 
 
-state 72
+state 73
 
     (22) params -> params COMMA . expr
     (8) expr -> . limit
@@ -2277,87 +2280,31 @@ state 72
     (10) expr -> . factorial
     (11) expr -> . abs
     (18) expr -> . fcall
-    (26) expr -> . expr PLUS expr
-    (27) expr -> . expr MINUS expr
-    (28) expr -> . expr MUL expr
-    (29) expr -> . expr DIV expr
-    (30) expr -> . expr EXPON expr
-    (31) expr -> . value
-    (32) expr -> . expr id
-    (33) expr -> . PAREN_OPEN expr PAREN_CLOSE
+    (27) expr -> . expr PLUS expr
+    (28) expr -> . expr MINUS expr
+    (29) expr -> . expr MUL expr
+    (30) expr -> . expr DIV expr
+    (31) expr -> . expr EXPON expr
+    (32) expr -> . value
+    (33) expr -> . expr id
+    (34) expr -> . PAREN_OPEN expr PAREN_CLOSE
     (16) limit -> . LIM ANGLE_OPEN to ANGLE_CLOSE expr
     (15) derivate -> . expr QUOTE
     (14) factorial -> . expr FACTOR
     (12) abs -> . OR expr OR
     (19) fcall -> . id PAREN_OPEN params PAREN_CLOSE
     (20) fcall -> . id PAREN_OPEN PAREN_CLOSE
-    (34) value -> . MINUS value
-    (35) value -> . STRING
-    (36) value -> . id
-    (37) value -> . bool
-    (41) value -> . number
-    (42) value -> . float
-    (38) id -> . ID
-    (39) bool -> . TRUE
-    (40) bool -> . FALSE
-    (43) number -> . INTEGER
-    (44) float -> . INTEGER DOT INTEGER
-
-    PAREN_OPEN      shift and go to state 15
-    LIM             shift and go to state 19
-    OR              shift and go to state 20
-    MINUS           shift and go to state 12
-    STRING          shift and go to state 21
-    ID              shift and go to state 25
-    TRUE            shift and go to state 26
-    FALSE           shift and go to state 27
-    INTEGER         shift and go to state 28
-
-    expr                           shift and go to state 76
-    limit                          shift and go to state 8
-    derivate                       shift and go to state 9
-    factorial                      shift and go to state 10
-    abs                            shift and go to state 11
-    fcall                          shift and go to state 48
-    value                          shift and go to state 13
-    id                             shift and go to state 49
-    bool                           shift and go to state 22
-    number                         shift and go to state 23
-    float                          shift and go to state 24
-
-state 73
-
-    (16) limit -> LIM ANGLE_OPEN to ANGLE_CLOSE . expr
-    (8) expr -> . limit
-    (9) expr -> . derivate
-    (10) expr -> . factorial
-    (11) expr -> . abs
-    (18) expr -> . fcall
-    (26) expr -> . expr PLUS expr
-    (27) expr -> . expr MINUS expr
-    (28) expr -> . expr MUL expr
-    (29) expr -> . expr DIV expr
-    (30) expr -> . expr EXPON expr
-    (31) expr -> . value
-    (32) expr -> . expr id
-    (33) expr -> . PAREN_OPEN expr PAREN_CLOSE
-    (16) limit -> . LIM ANGLE_OPEN to ANGLE_CLOSE expr
-    (15) derivate -> . expr QUOTE
-    (14) factorial -> . expr FACTOR
-    (12) abs -> . OR expr OR
-    (19) fcall -> . id PAREN_OPEN params PAREN_CLOSE
-    (20) fcall -> . id PAREN_OPEN PAREN_CLOSE
-    (34) value -> . MINUS value
-    (35) value -> . STRING
-    (36) value -> . id
-    (37) value -> . bool
-    (41) value -> . number
-    (42) value -> . float
-    (38) id -> . ID
-    (39) bool -> . TRUE
-    (40) bool -> . FALSE
-    (43) number -> . INTEGER
-    (44) float -> . INTEGER DOT INTEGER
+    (35) value -> . MINUS value
+    (36) value -> . STRING
+    (37) value -> . id
+    (38) value -> . bool
+    (42) value -> . number
+    (43) value -> . float
+    (39) id -> . ID
+    (40) bool -> . TRUE
+    (41) bool -> . FALSE
+    (44) number -> . INTEGER
+    (45) float -> . INTEGER DOT INTEGER
 
     PAREN_OPEN      shift and go to state 15
     LIM             shift and go to state 19
@@ -2383,37 +2330,93 @@ state 73
 
 state 74
 
-    (17) to -> id ARROW_RIGHT . expr
+    (16) limit -> LIM ANGLE_OPEN to ANGLE_CLOSE . expr
     (8) expr -> . limit
     (9) expr -> . derivate
     (10) expr -> . factorial
     (11) expr -> . abs
     (18) expr -> . fcall
-    (26) expr -> . expr PLUS expr
-    (27) expr -> . expr MINUS expr
-    (28) expr -> . expr MUL expr
-    (29) expr -> . expr DIV expr
-    (30) expr -> . expr EXPON expr
-    (31) expr -> . value
-    (32) expr -> . expr id
-    (33) expr -> . PAREN_OPEN expr PAREN_CLOSE
+    (27) expr -> . expr PLUS expr
+    (28) expr -> . expr MINUS expr
+    (29) expr -> . expr MUL expr
+    (30) expr -> . expr DIV expr
+    (31) expr -> . expr EXPON expr
+    (32) expr -> . value
+    (33) expr -> . expr id
+    (34) expr -> . PAREN_OPEN expr PAREN_CLOSE
     (16) limit -> . LIM ANGLE_OPEN to ANGLE_CLOSE expr
     (15) derivate -> . expr QUOTE
     (14) factorial -> . expr FACTOR
     (12) abs -> . OR expr OR
     (19) fcall -> . id PAREN_OPEN params PAREN_CLOSE
     (20) fcall -> . id PAREN_OPEN PAREN_CLOSE
-    (34) value -> . MINUS value
-    (35) value -> . STRING
-    (36) value -> . id
-    (37) value -> . bool
-    (41) value -> . number
-    (42) value -> . float
-    (38) id -> . ID
-    (39) bool -> . TRUE
-    (40) bool -> . FALSE
-    (43) number -> . INTEGER
-    (44) float -> . INTEGER DOT INTEGER
+    (35) value -> . MINUS value
+    (36) value -> . STRING
+    (37) value -> . id
+    (38) value -> . bool
+    (42) value -> . number
+    (43) value -> . float
+    (39) id -> . ID
+    (40) bool -> . TRUE
+    (41) bool -> . FALSE
+    (44) number -> . INTEGER
+    (45) float -> . INTEGER DOT INTEGER
+
+    PAREN_OPEN      shift and go to state 15
+    LIM             shift and go to state 19
+    OR              shift and go to state 20
+    MINUS           shift and go to state 12
+    STRING          shift and go to state 21
+    ID              shift and go to state 25
+    TRUE            shift and go to state 26
+    FALSE           shift and go to state 27
+    INTEGER         shift and go to state 28
+
+    expr                           shift and go to state 78
+    limit                          shift and go to state 8
+    derivate                       shift and go to state 9
+    factorial                      shift and go to state 10
+    abs                            shift and go to state 11
+    fcall                          shift and go to state 48
+    value                          shift and go to state 13
+    id                             shift and go to state 49
+    bool                           shift and go to state 22
+    number                         shift and go to state 23
+    float                          shift and go to state 24
+
+state 75
+
+    (17) to -> id ARROW_RIGHT . expr
+    (8) expr -> . limit
+    (9) expr -> . derivate
+    (10) expr -> . factorial
+    (11) expr -> . abs
+    (18) expr -> . fcall
+    (27) expr -> . expr PLUS expr
+    (28) expr -> . expr MINUS expr
+    (29) expr -> . expr MUL expr
+    (30) expr -> . expr DIV expr
+    (31) expr -> . expr EXPON expr
+    (32) expr -> . value
+    (33) expr -> . expr id
+    (34) expr -> . PAREN_OPEN expr PAREN_CLOSE
+    (16) limit -> . LIM ANGLE_OPEN to ANGLE_CLOSE expr
+    (15) derivate -> . expr QUOTE
+    (14) factorial -> . expr FACTOR
+    (12) abs -> . OR expr OR
+    (19) fcall -> . id PAREN_OPEN params PAREN_CLOSE
+    (20) fcall -> . id PAREN_OPEN PAREN_CLOSE
+    (35) value -> . MINUS value
+    (36) value -> . STRING
+    (37) value -> . id
+    (38) value -> . bool
+    (42) value -> . number
+    (43) value -> . float
+    (39) id -> . ID
+    (40) bool -> . TRUE
+    (41) bool -> . FALSE
+    (44) number -> . INTEGER
+    (45) float -> . INTEGER DOT INTEGER
 
     PAREN_OPEN      shift and go to state 15
     LIM             shift and go to state 19
@@ -2426,7 +2429,7 @@ state 74
     INTEGER         shift and go to state 28
 
     id                             shift and go to state 49
-    expr                           shift and go to state 78
+    expr                           shift and go to state 79
     limit                          shift and go to state 8
     derivate                       shift and go to state 9
     factorial                      shift and go to state 10
@@ -2437,26 +2440,26 @@ state 74
     number                         shift and go to state 23
     float                          shift and go to state 24
 
-state 75
-
-    (23) assign -> fcall ASSIGN CURLY_OPEN program CURLY_CLOSE .
-
-    SEMICOLON       reduce using rule 23 (assign -> fcall ASSIGN CURLY_OPEN program CURLY_CLOSE .)
-    NEWLINE         reduce using rule 23 (assign -> fcall ASSIGN CURLY_OPEN program CURLY_CLOSE .)
-
-
 state 76
 
+    (24) assign -> fcall ASSIGN CURLY_OPEN program CURLY_CLOSE .
+
+    SEMICOLON       reduce using rule 24 (assign -> fcall ASSIGN CURLY_OPEN program CURLY_CLOSE .)
+    NEWLINE         reduce using rule 24 (assign -> fcall ASSIGN CURLY_OPEN program CURLY_CLOSE .)
+
+
+state 77
+
     (22) params -> params COMMA expr .
-    (26) expr -> expr . PLUS expr
-    (27) expr -> expr . MINUS expr
-    (28) expr -> expr . MUL expr
-    (29) expr -> expr . DIV expr
-    (30) expr -> expr . EXPON expr
-    (32) expr -> expr . id
+    (27) expr -> expr . PLUS expr
+    (28) expr -> expr . MINUS expr
+    (29) expr -> expr . MUL expr
+    (30) expr -> expr . DIV expr
+    (31) expr -> expr . EXPON expr
+    (33) expr -> expr . id
     (15) derivate -> expr . QUOTE
     (14) factorial -> expr . FACTOR
-    (38) id -> . ID
+    (39) id -> . ID
 
     PAREN_CLOSE     reduce using rule 22 (params -> params COMMA expr .)
     COMMA           reduce using rule 22 (params -> params COMMA expr .)
@@ -2471,18 +2474,18 @@ state 76
 
     id                             shift and go to state 36
 
-state 77
+state 78
 
     (16) limit -> LIM ANGLE_OPEN to ANGLE_CLOSE expr .
-    (26) expr -> expr . PLUS expr
-    (27) expr -> expr . MINUS expr
-    (28) expr -> expr . MUL expr
-    (29) expr -> expr . DIV expr
-    (30) expr -> expr . EXPON expr
-    (32) expr -> expr . id
+    (27) expr -> expr . PLUS expr
+    (28) expr -> expr . MINUS expr
+    (29) expr -> expr . MUL expr
+    (30) expr -> expr . DIV expr
+    (31) expr -> expr . EXPON expr
+    (33) expr -> expr . id
     (15) derivate -> expr . QUOTE
     (14) factorial -> expr . FACTOR
-    (38) id -> . ID
+    (39) id -> . ID
 
   ! shift/reduce conflict for PLUS resolved as shift
   ! shift/reduce conflict for MINUS resolved as shift
@@ -2518,18 +2521,18 @@ state 77
 
     id                             shift and go to state 36
 
-state 78
+state 79
 
     (17) to -> id ARROW_RIGHT expr .
-    (26) expr -> expr . PLUS expr
-    (27) expr -> expr . MINUS expr
-    (28) expr -> expr . MUL expr
-    (29) expr -> expr . DIV expr
-    (30) expr -> expr . EXPON expr
-    (32) expr -> expr . id
+    (27) expr -> expr . PLUS expr
+    (28) expr -> expr . MINUS expr
+    (29) expr -> expr . MUL expr
+    (30) expr -> expr . DIV expr
+    (31) expr -> expr . EXPON expr
+    (33) expr -> expr . id
     (15) derivate -> expr . QUOTE
     (14) factorial -> expr . FACTOR
-    (38) id -> . ID
+    (39) id -> . ID
 
     ANGLE_CLOSE     reduce using rule 17 (to -> id ARROW_RIGHT expr .)
     PLUS            shift and go to state 31
@@ -2547,11 +2550,11 @@ WARNING: Conflicts:
 WARNING: 
 WARNING: shift/reduce conflict for SEMICOLON in state 6 resolved as shift
 WARNING: shift/reduce conflict for NEWLINE in state 6 resolved as shift
-WARNING: shift/reduce conflict for PLUS in state 77 resolved as shift
-WARNING: shift/reduce conflict for MINUS in state 77 resolved as shift
-WARNING: shift/reduce conflict for MUL in state 77 resolved as shift
-WARNING: shift/reduce conflict for DIV in state 77 resolved as shift
-WARNING: shift/reduce conflict for EXPON in state 77 resolved as shift
-WARNING: shift/reduce conflict for QUOTE in state 77 resolved as shift
-WARNING: shift/reduce conflict for FACTOR in state 77 resolved as shift
-WARNING: shift/reduce conflict for ID in state 77 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 78 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 78 resolved as shift
+WARNING: shift/reduce conflict for MUL in state 78 resolved as shift
+WARNING: shift/reduce conflict for DIV in state 78 resolved as shift
+WARNING: shift/reduce conflict for EXPON in state 78 resolved as shift
+WARNING: shift/reduce conflict for QUOTE in state 78 resolved as shift
+WARNING: shift/reduce conflict for FACTOR in state 78 resolved as shift
+WARNING: shift/reduce conflict for ID in state 78 resolved as shift

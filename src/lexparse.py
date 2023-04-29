@@ -16,12 +16,8 @@ t_DIV = r"\/"
 t_MINUS = r"\-"
 t_ASSIGN = r"\="
 
-t_EQUAL = r"\=\="
-t_NOT_EQUAL = r"\!\="
 t_LESS = r"\<"
 t_GREATER = r"\>"
-t_LESS_EQ = r"\<\="
-t_GREATER_EQ = r"\>\="
 
 t_PAREN_OPEN  = r"\("
 t_PAREN_CLOSE = r"\)"
@@ -31,8 +27,6 @@ t_SEMICOLON = r"\;"
 t_CURLY_OPEN = r"\{"
 t_CURLY_CLOSE = r"\}"
 t_HASH = r"\#"
-t_BRACKET_OPEN = r"\["
-t_BRACKET_CLOSE = r"\]"
 t_ANGLE_OPEN = r"\<"
 t_ANGLE_CLOSE = r"\>"
 t_QUOTE = "'"
@@ -58,15 +52,14 @@ t_STRING = r'"[^"\\]*(?:\\.[^"\\]*)*"'
 tokens = ["STRING",
           "INTEGER",
           "PLUS", "MINUS", "MUL", "DIV",
-          "ASSIGN", "EQUAL", "NOT_EQUAL",
-          "GREATER", "LESS", "GREATER_EQ", "LESS_EQ",
+          "ASSIGN",
+          "GREATER", "LESS",
           "DOT", "COMMA", "NEWLINE", "SEMICOLON", "HASH",
           "PAREN_OPEN", "PAREN_CLOSE",
           "ANGLE_OPEN", "ANGLE_CLOSE", "ID",
-          "BRACKET_OPEN", "BRACKET_CLOSE",
           "CURLY_OPEN", "CURLY_CLOSE",
           "QUOTE", "ARROW_RIGHT", "FACTOR",
-          "EXPON", "OR", "UNINTEGER"
+          "EXPON", "OR"
           ] + list(reserved)
 
 def t_INTEGER(token):
@@ -105,9 +98,7 @@ def eval_partial(a, op, b):
         return a ** b
 
 precedence = (
-    ('left', 'EQUAL', 'NOT_EQUAL'),
     ('left', 'GREATER', 'LESS'),
-    ('left', 'GREATER_EQ', 'LESS_EQ'),
     ('left', 'PLUS'),
     ('left', 'MINUS'),
     ('left', 'MUL'),
@@ -129,7 +120,14 @@ def p_error(p):
 
     print("------------")
     log.codeline(line, ln)
-    print("------------")
+
+    lens = map(len, p.lexer.code.split("\n")[:ln - 1])
+    lens = sum([i + 1 for i in lens])
+
+    offset = p.lexer.lexpos - lens
+
+    print("------------", " "*(offset + 1), "^", sep='')
+
     exit(1)
 
 def p_program_first(p):
@@ -232,6 +230,11 @@ def p_params(p):
             p[0] = AST.Params([*p[1].value, p[3]], p[1].lineno)
         else:
             p[0] = AST.Params([p[1], p[3]], p[1].lineno)
+
+
+def p_hard_func_empty(p):
+    'assign : fcall ASSIGN CURLY_OPEN CURLY_CLOSE'
+    p[0] = AST.Assign(p[1], AST.Program([]), p[1].lineno)
 
 
 def p_hard_func(p):

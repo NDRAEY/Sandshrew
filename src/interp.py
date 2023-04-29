@@ -2,17 +2,20 @@ import math
 from context import Context
 from log import Log as log
 import ch_ast as AST
-from pprint import pprint
 from copy import deepcopy
 from typing import Any
 
-from derivate import derivate
-from limits import limit
+from additional_math.derivate import derivate
+from additional_math.limits import limit
 
 class Interpreter:
     def __init__(self, code: str,
                        context: Context = None):
+        """
+        Инициализатор интерпретатора.
 
+        Устанавливает контекст, и подготавливает код.
+        """
         if context:
             self.context = context
         else:
@@ -21,9 +24,11 @@ class Interpreter:
         self.codelines = code.split('\n')
 
     def __getcodeline(self, ln: int) -> str:
+        "Возвращает строку из кода по номеру строки"
         return self.codelines[ln - 1] if ln > 0 and ln - 1 < len(self.codelines) else "*неверный номер строки*"
 
     def __error(self, op, msg: str, hint: str = None) -> None:
+        "Печатает информацию об ошибке и завершает интерпретатор"
         log.error(msg)
         if hint:
             log.hint(" " + hint)
@@ -32,6 +37,7 @@ class Interpreter:
         exit(1)
 
     def __binop_eval(self, binop) -> Any:
+        "Исполняет операции в зависимости от типа операции"
         if type(binop) is AST.Integer or type(binop) is AST.Float:
             return binop.value
         elif type(binop) is AST.String:
@@ -78,14 +84,20 @@ class Interpreter:
         eleft = self.__binop_eval(left)
         eright = self.__binop_eval(right)
 
+        # Проверка типа
+        
         tle = type(eleft).__name__
         tre = type(eright).__name__
+
+        # Поддерживаемые для смешивания типы.
 
         n1 = tle in ("int", "float")
         n2 = tre in ("int", "float")
 
         if tle != tre and (not n1) and (not n2):
             self.__error(left, f"Несовместимые типы для операции `{op}`: {tle} и {tre}")
+
+        # Исполнение арифметической операции
          
         if op == "+":
             return eleft + eright
@@ -98,7 +110,8 @@ class Interpreter:
         elif op == "/":
             return eleft / eright
 
-    def __particular_eval(self, elem):
+    def __particular_eval(self, elem: Any):
+        "Частично исполняет операцию"
         if (type(elem) is AST.Name) \
            or (type(elem) is AST.Integer) \
            or (type(elem) is AST.Float):
@@ -124,7 +137,12 @@ class Interpreter:
             print("WARNING: Unevaluable type:", type(elem))
             return elem
 
-    def __get_variable_value(self, op, name: str):
+    def __get_variable_value(self, op: Any, name: str):
+        """
+        Возвращает значение переменной.
+
+        Ошибка: только когда переменная не найдена.
+        """
         hint = None
     
         if name not in self.context.variables:
@@ -134,16 +152,22 @@ class Interpreter:
 
         return self.context.variables[name]
 
-    def __get_var_or_func(self, op, name):
+    def __get_var_or_func(self, op: Any, name: str):
+        """
+        Возвращает переменную или функцию.
+        """
         if name in self.context.variables:
             return self.context.variables[name]
         elif name in self.context.functions:
             return self.context.functions[name]
         else:
             print("Warning: Neither variable nor the function were found:", name)
-            self.__error(op, f"Ни переменная, ни функция не найдены!", "Имя: "+name)
+            self.__error(op, "Ни переменная, ни функция не найдены!", "Имя: "+name)
 
     def __start_func_call(self, name: AST.Name, args: AST.Params):
+        """
+        Находит функцию по имени и вызывает её
+        """
         realname = name.value
         
         if realname not in self.context.functions:
@@ -188,6 +212,8 @@ class Interpreter:
 
 
     def __func_call_by_function(self, fn: AST.Func, args: list, fcall: AST.FuncCall = None):
+        "Исполняет функцию по объекту функции."
+        
         if type(fn) is not AST.Func:
             return fn(*args)
         else:
@@ -214,13 +240,16 @@ class Interpreter:
 
             return res
 
-    def call_func(self, fn, args: list):
+    def call_func(self, fn: AST.Func, args: list):
+        "Вызов функции (доступен для пользователю)"
         return self.__func_call_by_function(fn, args)
 
-    def add_module(self, module_class):
+    def add_module(self, module_class: Any):
+        "Добавляет модуль в интерпретатор"
         module_class(self.context)
 
-    def func2deriv(self, deriv):
+    def func2deriv(self, deriv: AST.Func):
+        "Вычисляет производную из функции"
         partial_fun = lambda x: self.__func_call_by_function(
             AST.Func(
                 AST.Name("_", -1, -1),
@@ -237,7 +266,8 @@ class Interpreter:
             1
         )
 
-    def run(self, ast):
+    def run(self, ast: AST.Program):
+        "Запускает интерпретатор нв исполнение."
         if type(ast) is AST.Name:
             return self.__get_variable_value(ast, ast.value)
         elif type(ast) is AST.BinOp:
