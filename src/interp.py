@@ -21,7 +21,10 @@ class Interpreter:
         else:
             self.context = Context(code)
         
-        self.codelines = code.split('\n')
+        self.codelines = self.gencodelines()
+
+    def gencodelines(self):
+        return self.context.code.split("\n")
 
     def __getcodeline(self, ln: int) -> str:
         "Возвращает строку из кода по номеру строки"
@@ -34,6 +37,7 @@ class Interpreter:
             log.hint(" " + hint)
         print("-" * 5, ": ", f"На строке {op.lineno}", sep='')
         log.codeline(self.__getcodeline(op.lineno), op.lineno, 5)
+
         exit(1)
 
     def __binop_eval(self, binop) -> Any:
@@ -334,10 +338,15 @@ class Interpreter:
                     print("Support in Interpreter::run(): ", type(name))
                     exit(1)
             elif op_type is AST.FuncCall:
-                self.__start_func_call(op.name, op.arguments)
+                return self.__start_func_call(op.name, op.arguments)
             elif op_type is AST.Return:
-                # print(op)
                 return self.__binop_eval(op)
+            elif op_type is AST.Integer:
+                return self.__binop_eval(op)
+            elif op_type is AST.BinOp:
+                return self.__binop_eval(op)
+            elif op_type is AST.Name:
+                return self.__get_variable_value(op, op.value)
             else:
                 self.__error(op, f"Неизвестная операция класса: {op_type}")
 

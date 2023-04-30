@@ -26,7 +26,6 @@ t_DOT = r"\."
 t_SEMICOLON = r"\;"
 t_CURLY_OPEN = r"\{"
 t_CURLY_CLOSE = r"\}"
-t_HASH = r"\#"
 t_ANGLE_OPEN = r"\<"
 t_ANGLE_CLOSE = r"\>"
 t_QUOTE = "'"
@@ -54,7 +53,7 @@ tokens = ["STRING",
           "PLUS", "MINUS", "MUL", "DIV",
           "ASSIGN",
           "GREATER", "LESS",
-          "DOT", "COMMA", "NEWLINE", "SEMICOLON", "HASH",
+          "DOT", "COMMA", "NEWLINE", "SEMICOLON",
           "PAREN_OPEN", "PAREN_CLOSE",
           "ANGLE_OPEN", "ANGLE_CLOSE", "ID",
           "CURLY_OPEN", "CURLY_CLOSE",
@@ -144,12 +143,18 @@ def p_program(p):
     p[1].ops.append(p[2])
     p[0] = p[1]
 
+def p_operation_end(p):
+    """
+    operation : operation end
+    """
+    p[0] = p[1]
+
 def p_operation(p):
+              # | fcall
     '''
-    operation : expr end
-              | assign end
-              | fcall end
-              | return end
+    operation : expr
+              | return
+              | assign
               | end
     '''
     p[0] = AST.Operation(p[1], p[1].lineno if hasattr(p[1], 'lineno') else p.lineno(1))

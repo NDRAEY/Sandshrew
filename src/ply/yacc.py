@@ -88,15 +88,18 @@ MAXINT = sys.maxsize
 # it into PLY.
 
 class PlyLogger(object):
-    def __init__(self, f):
+    def __init__(self, f, quiet=False):
         self.f = f
+        self.quiet = quiet
 
     def debug(self, msg, *args, **kwargs):
+        if self.quiet: return
         self.f.write((msg % args) + '\n')
 
     info = debug
 
     def warning(self, msg, *args, **kwargs):
+        if self.quiet: return
         self.f.write('WARNING: ' + (msg % args) + '\n')
 
     def error(self, msg, *args, **kwargs):
@@ -2270,13 +2273,13 @@ class ParserReflect(object):
 
 def yacc(*, debug=yaccdebug, module=None, start=None,
          check_recursion=True, optimize=False, debugfile=debug_file,
-         debuglog=None, errorlog=None):
+         debuglog=None, errorlog=None, quiet=False):
 
     # Reference to the parsing method of the last built parser
     global parse
 
     if errorlog is None:
-        errorlog = PlyLogger(sys.stderr)
+        errorlog = PlyLogger(sys.stderr, quiet)
 
     # Get the module dictionary used for the parser
     if module:
