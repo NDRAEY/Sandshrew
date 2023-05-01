@@ -10,7 +10,7 @@ class Shell:
 
     def run(self):
         while True:
-            self.context.code = input(f"{self.linenum}: > ")
+            self.context.code = input(f"[{self.linenum}]: > ")
 
             if self.context.code.strip() == "exit":
                 exit(0)

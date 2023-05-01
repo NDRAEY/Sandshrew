@@ -1,7 +1,7 @@
 import math
 from context import Context
 from log import Log as log
-import ch_ast as AST
+import sandshrew_ast as AST
 from copy import deepcopy
 from typing import Any
 
@@ -322,7 +322,8 @@ class Interpreter:
                 val  = op.value
 
                 if type(name) is AST.Name:
-                    tmp = self.__particular_eval(name)
+                    # tmp = self.__particular_eval(name)
+                    tmp = name.value
                     self.context.variables[tmp] = self.__particular_eval(val)
                 elif type(name) is AST.FuncCall:
                     rname = self.__particular_eval(name.name)

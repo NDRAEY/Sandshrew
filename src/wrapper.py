@@ -1,16 +1,16 @@
 import lexparse
 from interp import Interpreter
 
-from ch_modules import print as PrintModule
-from ch_modules import trigonometry as TrigModule
-from ch_modules import sum as SumModule
+from sw_modules import print as PrintModule
+from sw_modules import trigonometry as TrigModule
+from sw_modules import sum as SumModule
 
-def make_ast(code, filename="<stdio>", quiet=False):
+def make_ast(code, filename="<stdio>", debug=False):
     lexer = lexparse.lex(module=lexparse)
     lexer.filename = "<stdio>"
     lexer.code = code
     
-    parser = lexparse.yacc(debug=True, module=lexparse, quiet=quiet)
+    parser = lexparse.yacc(debug=debug, module=lexparse, quiet=not debug)
 
     return parser.parse(code)
 
@@ -28,8 +28,8 @@ def build_interpreter(code, variables={}, functions={}):
     return interp
 
 
-def run_code(code, debug=False, variables={}, functions={}):
-    ast = make_ast(code, quiet=not debug)
-    interp = build_interpreter(code)
+def run_code(code, debug=False, variables={}, functions={}, filename="<stdio>"):
+    ast = make_ast(code, debug=debug, filename=filename)
+    interp = build_interpreter(code, variables=variables, functions=functions)
 
     return interp.run(ast)

@@ -3,7 +3,7 @@ from ply.yacc import yacc
 from errors import LexerError
 
 import math
-import ch_ast as AST
+import sandshrew_ast as AST
 from log import Log as log
 
 # TODO: Make deatiled error when lexing and parsing
