@@ -19,7 +19,7 @@ class Shell:
             self.linenum += 1
 
             result = self.interp.run(
-                wrapper.make_ast(self.context.code, quiet=True)
+                wrapper.make_ast(self.context.code, debug=False)
             )
 
             if result is not None:
