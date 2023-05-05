@@ -50,7 +50,6 @@ class Interpreter:
             return math.factorial(self.__binop_eval(binop.value))
         elif type(binop) is AST.Name:
             value = self.__get_variable_value(binop, binop.value)
-            
             return self.__particular_eval(value)
         elif type(binop) is AST.FuncCall:
             return self.__start_func_call(binop.name, binop.arguments)
@@ -207,13 +206,9 @@ class Interpreter:
             else:
                 print("Trying to add", type(i), "to args")
 
-        # print("ARGS:", args.value)
-
         fn = self.context.functions[realname]
 
         return self.__func_call_by_function(fn, compiled_args, name)
-        # pprint(compiled_args)
-
 
     def __func_call_by_function(self, fn: AST.Func, args: list, fcall: AST.FuncCall = None):
         "Исполняет функцию по объекту функции."
@@ -254,6 +249,11 @@ class Interpreter:
 
     def func2deriv(self, deriv: AST.Func):
         "Вычисляет производную из функции"
+        dx = 1
+
+        if "__dx__" in self.context.variables:
+            dx = self.context.variables["__dx__"]
+        
         partial_fun = lambda x: self.__func_call_by_function(
             AST.Func(
                 AST.Name("_", -1, -1),
@@ -267,7 +267,7 @@ class Interpreter:
 
         return derivate(
             partial_fun,
-            1
+            dx
         )
 
     def run(self, ast: AST.Program):
@@ -282,25 +282,7 @@ class Interpreter:
             return math.factorial(self.__binop_eval(ast.value))
         elif type(ast) is AST.Derivate:
             func = ast.value
-
-            # Create temporal function
-            partial_fun = lambda x: self.__func_call_by_function(
-                AST.Func(
-                    AST.Name("_", -1, -1),
-                    AST.Params([AST.Name('x', -1, -1)], -1),
-                    func,
-                    -1
-                ),
-                [AST.Integer(x, -1, -1)],
-                func
-            )
-
-            d = derivate(
-                partial_fun,
-                1
-            )
-
-            return d
+            return self.func2deriv(func)
         elif type(ast) is AST.FuncCall:
             return self.__start_func_call(ast.name, ast.arguments)
         elif type(ast) is AST.Negate:
@@ -348,7 +330,7 @@ class Interpreter:
                 return self.__binop_eval(op)
             elif op_type is AST.Name:
                 return self.__get_variable_value(op, op.value)
+            elif op_type is AST.Derivate:
+                return self.func2deriv(op.value)
             else:
                 self.__error(op, f"Неизвестная операция класса: {op_type}")
-
-            # print("=>", op_type)

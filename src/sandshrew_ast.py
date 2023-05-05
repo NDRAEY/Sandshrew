@@ -14,6 +14,9 @@ class Integer:
     def __add__(a, b):
         return Integer(a.value + b.value, a.lineno, a.position)
 
+    def __sub__(a, b):
+        return Integer(a.value - b.value, a.lineno, a.position)
+        
 @dataclass
 class Abs:
     value: Any
