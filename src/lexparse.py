@@ -115,17 +115,19 @@ def p_error(p):
     log.error('Синтаксическая ошибка!')
     log.hint(f' Токен: {errtoken} | ID токена: {tokentype} | Строка: {ln}')
 
+    if p is None:
+        return
+
     line = p.lexer.code.split("\n")[ln - 1]
 
-    print("------------")
-    log.codeline(line, ln)
+    offset = log.codeline(line, ln)
 
     lens = map(len, p.lexer.code.split("\n")[:ln - 1])
     lens = sum([i + 1 for i in lens])
 
-    offset = p.lexer.lexpos - lens
+    offset -= lens
 
-    print("------------", " "*(offset + 1), "^", sep='')
+    print(" "*(offset + p.lexpos), "^", sep='')
 
     exit(1)
 

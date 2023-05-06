@@ -1,0 +1,3 @@
+a = lim<x->1.04>(sin(x) / x)
+
+print(a)

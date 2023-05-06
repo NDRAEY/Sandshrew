@@ -40,6 +40,11 @@ class Interpreter:
         print("-" * 5, ": ", f"На строке {op.lineno}", sep='')
         log.codeline(self.__getcodeline(op.lineno), op.lineno, 5)
 
+        lens = list(map(len, self.codelines))
+        ln = sum([i + 1 for i in lens[:op.lineno - 1]])
+        
+        print(" "*(10 + ln + op.position), "^", sep='')
+
         self.on_error()
 
     def __binop_eval(self, binop) -> Any:
@@ -82,6 +87,9 @@ class Interpreter:
         elif type(binop) is AST.Return:
             return self.__binop_eval(binop.value)
 
+        if binop is None:
+            return
+
         op = binop.op
         left = binop.left
         right = binop.right
@@ -113,6 +121,8 @@ class Interpreter:
         elif op == "^":
             return eleft ** eright
         elif op == "/":
+            if eright == 0:
+                self.__error(right, "Деление на 0")
             return eleft / eright
 
     def __particular_eval(self, elem: Any):
@@ -277,24 +287,8 @@ class Interpreter:
 
     def run(self, ast: AST.Program):
         "Запускает интерпретатор на исполнение."
-        # if type(ast) is AST.Name:
-        #     return self.__get_variable_value(ast, ast.value)
-        # elif type(ast) is AST.BinOp:
-        #     return self.__binop_eval(ast)
-        # elif type(ast) is AST.Integer:
-        #     return ast.value
-        # elif type(ast) is AST.Factorial:
-        #     return self.__binop_eval(ast.value)
-        # elif type(ast) is AST.Derivate:
-        #     func = ast.value
-        #     return self.func2deriv(func)
-        # elif type(ast) is AST.FuncCall:
-        #     return self.__start_func_call(ast.name, ast.arguments)
-        # elif type(ast) is AST.Negate:
-        #     return -self.__binop_eval(ast.value)
         if type(ast) is not AST.Program:
             return self.__binop_eval(ast)
-            self.__error(ast, "Неизвестный тип возврата: "+str(type(ast))+"  "+str(ast))
 
         ops = ast.ops
 
@@ -326,6 +320,8 @@ class Interpreter:
                 else:
                     print("Support in Interpreter::run(): ", type(name))
                     exit(1)
+            elif op_type is AST.FuncCall:
+                self.__binop_eval(op)
             else:
                 return self.__binop_eval(op)
                 # self.__error(op, f"Неизвестная операция класса: {op_type}")

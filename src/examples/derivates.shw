@@ -1,0 +1,9 @@
+a = x'
+
+b = (8x)'
+
+c = (6 * (x^2))'
+
+d = deriv(sin, deg2rad(60))
+
+print(a, b, c, d)

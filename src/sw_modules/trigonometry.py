@@ -5,6 +5,7 @@ class Module:
         ctx.functions['sin'] = math.sin
         ctx.functions['cos'] = math.cos
         ctx.functions['tan'] = math.tan
-        ctx.variables['pi']  = math.pi
 
-        self.arg_count = 1
+        ctx.functions['deg2rad'] = lambda x: x * math.pi / 180
+
+        ctx.variables['pi']  = math.pi
