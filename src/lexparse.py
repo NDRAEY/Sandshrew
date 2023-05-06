@@ -104,6 +104,7 @@ precedence = (
     ('left', 'DIV'),
     ('left', 'EXPON'),
     ('left', 'FACTOR'),
+    ('left', 'ID'),
     ('right', 'UMINUS'),
 )
 
@@ -284,9 +285,9 @@ def p_expval(p):
 
 def p_mul_binop(p):
     '''
-    expr : expr id
+    expr : number id
     '''
-    p[0] = AST.BinOp(p[1], "*", p[2], p[1].lineno)
+    p[0] = AST.BinOp(p[1], "*", p[2], p.lineno(1))
 
 
 def p_binop_paren(p):
@@ -298,12 +299,13 @@ def p_binop_paren(p):
 
 def p_negative_value(p):
     '''
-    value : MINUS value %prec UMINUS
+    expr : MINUS expr %prec UMINUS
     '''
     if isinstance(p[2], AST.Integer):
         p[0] = AST.Integer(-p[2].value, p.lineno(2), p.lexpos(2))
     else:
-        p[0] = AST.Negate(AST.Name(p[2].value, p.lineno(2), p.lexpos(2)), p.lineno(2))
+        # p[0] = AST.Negate(AST.Name(p[2].value, p.lineno(2), p.lexpos(2)), p.lineno(2))
+        p[0] = AST.Negate(p[2], p.lineno(2))
 
 def p_value_string(p):
     '''

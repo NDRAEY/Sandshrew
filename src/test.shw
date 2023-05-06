@@ -1,0 +1,7 @@
+a(x) = (x + 1) ^ 2
+
+b(x) = x! + 1
+
+discriminant(a, b, c) = b ^ 2 - 4a * c
+
+print(a(10), b(5), discriminant(1, 2, 3))
