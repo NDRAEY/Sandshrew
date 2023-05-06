@@ -10,7 +10,8 @@ from additional_math.limits import limit
 
 class Interpreter:
     def __init__(self, code: str,
-                       context: Context = None):
+                       context: Context = None,
+                       on_error = lambda: exit(1)):
         """
         Инициализатор интерпретатора.
 
@@ -22,6 +23,7 @@ class Interpreter:
             self.context = Context(code)
         
         self.codelines = self.gencodelines()
+        self.on_error = on_error
 
     def gencodelines(self):
         return self.context.code.split("\n")
@@ -38,7 +40,7 @@ class Interpreter:
         print("-" * 5, ": ", f"На строке {op.lineno}", sep='')
         log.codeline(self.__getcodeline(op.lineno), op.lineno, 5)
 
-        exit(1)
+        self.on_error()
 
     def __binop_eval(self, binop) -> Any:
         "Исполняет операции в зависимости от типа операции"
@@ -63,7 +65,7 @@ class Interpreter:
 
             return result
         elif type(binop) is AST.Derivate:
-            self.__error(binop, "Невозможно использовать производную рядом с выражением.")
+            return self.func2deriv(binop.value)
         elif type(binop) is AST.Limit:
             partial_fun = lambda x: self.__particular_eval(self.__func_call_by_function(
                 AST.Func(
@@ -214,7 +216,10 @@ class Interpreter:
         "Исполняет функцию по объекту функции."
         
         if type(fn) is not AST.Func:
-            return fn(*args)
+            try:
+                return fn(*args)
+            except TypeError as e:
+                self.__error(fcall, f"Произошла ошибка при вызове внешней функции. Возможно вы не указали некоторые аргументы к функции.", f"Сообщение: {str(e)}")
         else:
             accepts = [self.__particular_eval(i) for i in fn.args.value]
 
@@ -271,23 +276,24 @@ class Interpreter:
         )
 
     def run(self, ast: AST.Program):
-        "Запускает интерпретатор нв исполнение."
-        if type(ast) is AST.Name:
-            return self.__get_variable_value(ast, ast.value)
-        elif type(ast) is AST.BinOp:
+        "Запускает интерпретатор на исполнение."
+        # if type(ast) is AST.Name:
+        #     return self.__get_variable_value(ast, ast.value)
+        # elif type(ast) is AST.BinOp:
+        #     return self.__binop_eval(ast)
+        # elif type(ast) is AST.Integer:
+        #     return ast.value
+        # elif type(ast) is AST.Factorial:
+        #     return self.__binop_eval(ast.value)
+        # elif type(ast) is AST.Derivate:
+        #     func = ast.value
+        #     return self.func2deriv(func)
+        # elif type(ast) is AST.FuncCall:
+        #     return self.__start_func_call(ast.name, ast.arguments)
+        # elif type(ast) is AST.Negate:
+        #     return -self.__binop_eval(ast.value)
+        if type(ast) is not AST.Program:
             return self.__binop_eval(ast)
-        elif type(ast) is AST.Integer:
-            return ast.value
-        elif type(ast) is AST.Factorial:
-            return math.factorial(self.__binop_eval(ast.value))
-        elif type(ast) is AST.Derivate:
-            func = ast.value
-            return self.func2deriv(func)
-        elif type(ast) is AST.FuncCall:
-            return self.__start_func_call(ast.name, ast.arguments)
-        elif type(ast) is AST.Negate:
-            return -self.__binop_eval(ast.value)
-        elif type(ast) is not AST.Program:
             self.__error(ast, "Неизвестный тип возврата: "+str(type(ast))+"  "+str(ast))
 
         ops = ast.ops
@@ -320,17 +326,6 @@ class Interpreter:
                 else:
                     print("Support in Interpreter::run(): ", type(name))
                     exit(1)
-            elif op_type is AST.FuncCall:
-                return self.__start_func_call(op.name, op.arguments)
-            elif op_type is AST.Return:
-                return self.__binop_eval(op)
-            elif op_type is AST.Integer:
-                return self.__binop_eval(op)
-            elif op_type is AST.BinOp:
-                return self.__binop_eval(op)
-            elif op_type is AST.Name:
-                return self.__get_variable_value(op, op.value)
-            elif op_type is AST.Derivate:
-                return self.func2deriv(op.value)
             else:
-                self.__error(op, f"Неизвестная операция класса: {op_type}")
+                return self.__binop_eval(op)
+                # self.__error(op, f"Неизвестная операция класса: {op_type}")

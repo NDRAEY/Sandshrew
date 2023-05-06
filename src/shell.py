@@ -4,7 +4,7 @@ from context import Context
 class Shell:
     def __init__(self):
         self.context = Context("")
-        self.interp = wrapper.build_interpreter(self.context.code)
+        self.interp = wrapper.build_interpreter(self.context.code, on_error=self.run)
         self.interp.context = self.context
         self.linenum = 1
 
