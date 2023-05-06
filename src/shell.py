@@ -10,16 +10,22 @@ class Shell:
 
     def run(self):
         while True:
-            self.context.code = input(f"[{self.linenum}]: > ")
+            self.interp.context.code = input(f"[{self.linenum}]: > ")
+            if self.interp.context.code == "":
+                continue
 
-            if self.context.code.strip() == "exit":
+            print("Set", self.interp.context.code)
+
+            if self.interp.context.code.strip() == "exit":
                 exit(0)
             
             self.interp.codelines = self.interp.gencodelines()
+            print("Gen")
+            
             self.linenum += 1
 
             result = self.interp.run(
-                wrapper.make_ast(self.context.code, debug=False)
+                wrapper.make_ast(self.interp.context.code, debug=False)
             )
 
             if result is not None:

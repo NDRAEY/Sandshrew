@@ -304,9 +304,8 @@ class Interpreter:
                 val  = op.value
 
                 if type(name) is AST.Name:
-                    # tmp = self.__particular_eval(name)
                     tmp = name.value
-                    self.context.variables[tmp] = self.__particular_eval(val)
+                    self.context.variables[tmp] = self.__binop_eval(val)
                 elif type(name) is AST.FuncCall:
                     rname = self.__particular_eval(name.name)
                     args = name.arguments
