@@ -7,6 +7,9 @@ from sw_modules import sum as SumModule
 from sw_modules import deriv as DerivModule
 from sw_modules import log as LogModule
 from sw_modules import round as RoundModule
+from sw_modules import arcs as ArcsModule
+from sw_modules import mul as MulModule
+from sw_modules import integral as IntegralModule
 
 def make_ast(code, filename="<stdio>", debug=False):
     lexer = lexparse.lex(module=lexparse)
@@ -27,6 +30,9 @@ def build_interpreter(code, variables={}, functions={}, on_error = lambda: exit(
     interp.add_module(DerivModule.Module)
     interp.add_module(LogModule.Module)
     interp.add_module(RoundModule.Module)
+    interp.add_module(ArcsModule.Module)
+    interp.add_module(MulModule.Module)
+    interp.add_module(IntegralModule.Module)
 
     interp.context.variables |= variables
     interp.context.functions |= functions

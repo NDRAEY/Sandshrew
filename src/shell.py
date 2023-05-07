@@ -14,13 +14,10 @@ class Shell:
             if self.interp.context.code == "":
                 continue
 
-            print("Set", self.interp.context.code)
-
             if self.interp.context.code.strip() == "exit":
                 exit(0)
             
             self.interp.codelines = self.interp.gencodelines()
-            print("Gen")
             
             self.linenum += 1
 
