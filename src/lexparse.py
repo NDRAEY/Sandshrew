@@ -61,6 +61,8 @@ tokens = ["STRING",
           "EXPON", "OR"
           ] + list(reserved)
 
+on_error = lambda: exit(1)
+
 def t_INTEGER(token):
     r"(0x[\dA-Fa-f]+|0o[0-7]+|0b[10]+|\d+)"
     return token
@@ -80,7 +82,8 @@ def t_comment(t):
 def t_error(t):
     le = LexerError(t.lexer)
     le.error(t.lexer.filename, f"Неизвестный символ {t.value[0]!r}", t)
-    exit(1)
+
+    on_error()
 
 # Parser ================================================================
 
@@ -130,7 +133,7 @@ def p_error(p):
 
     print(" "*(offset + p.lexpos), "^", sep='')
 
-    exit(1)
+    on_error()
 
 def p_program_first(p):
     'program : operation'

@@ -12,6 +12,7 @@ class Shell:
         while True:
             self.interp.context.code = input(f"[{self.linenum}]: > ")
             if self.interp.context.code == "":
+                self.linenum += 1
                 continue
 
             if self.interp.context.code.strip() == "exit":
@@ -22,7 +23,7 @@ class Shell:
             self.linenum += 1
 
             result = self.interp.run(
-                wrapper.make_ast(self.interp.context.code, debug=False)
+                wrapper.make_ast(self.interp.context.code, debug=False, on_error=self.run)
             )
 
             if result is not None:

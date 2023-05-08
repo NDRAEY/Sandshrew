@@ -11,7 +11,10 @@ from sw_modules import arcs as ArcsModule
 from sw_modules import mul as MulModule
 from sw_modules import integral as IntegralModule
 
-def make_ast(code, filename="<stdio>", debug=False):
+def make_ast(code, filename="<stdio>", debug=False, on_error=None):
+    if on_error:
+        lexparse.on_error = on_error
+
     lexer = lexparse.lex(module=lexparse)
     lexer.filename = "<stdio>"
     lexer.code = code
@@ -41,7 +44,7 @@ def build_interpreter(code, variables={}, functions={}, on_error = lambda: exit(
 
 
 def run_code(code, debug=False, variables={}, functions={}, filename="<stdio>", on_error = lambda: exit(1)):
-    ast = make_ast(code, debug=debug, filename=filename)
+    ast = make_ast(code, debug=debug, filename=filename, on_error=on_error)
     interp = build_interpreter(code, variables=variables, functions=functions, on_error=on_error)
 
     return interp.run(ast)
