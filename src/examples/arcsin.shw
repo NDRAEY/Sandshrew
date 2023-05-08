@@ -1,0 +1,19 @@
+deg = 30
+
+print("Градусы:", deg)
+
+rads = deg2rad(deg)
+
+print("Радианы:", rads)
+
+mysin = sin(rads)
+
+print("Синус", deg, "градусов:", mysin)
+
+back_rads = arcsin(mysin)
+
+print("Арксинус от синуса:", back_rads)
+
+back_degs = rad2deg(back_rads)
+
+print("Полученный угол:", back_degs)
