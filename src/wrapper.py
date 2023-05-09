@@ -10,6 +10,7 @@ from sw_modules import round as RoundModule
 from sw_modules import arcs as ArcsModule
 from sw_modules import mul as MulModule
 from sw_modules import integral as IntegralModule
+from sw_modules import sqrt as RootModule
 
 def make_ast(code, filename="<stdio>", debug=False, on_error=None):
     if on_error:
@@ -36,6 +37,7 @@ def build_interpreter(code, variables={}, functions={}, on_error = lambda: exit(
     interp.add_module(ArcsModule.Module)
     interp.add_module(MulModule.Module)
     interp.add_module(IntegralModule.Module)
+    interp.add_module(RootModule.Module)
 
     interp.context.variables |= variables
     interp.context.functions |= functions
